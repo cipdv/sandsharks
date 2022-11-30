@@ -76,7 +76,7 @@ const RegisterScreen = () => {
                     {errors.password && <p className='error-msg'>{errors.password}</p>}
                     <label>Confirm password</label>
                     <input type='password' name='confirmPassword' placeholder='Confirm your password' value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
-                    {errors.confirmPassword && <p className='error-msg'>Passwords do not match</p>}
+                    {errors.confirmPassword && <p className='error-msg'>{errors.confirmPassword}</p>}
                 </div>
                 <div className='form-field'>
                     <label>What experience playing beach volleyball do you have?</label>

@@ -2,6 +2,7 @@ import { AUTH, SHOW_LOADER, HIDE_LOADER, LOGOUT } from "../constants/userConstan
 
 //authorize a user
 export const authReducer = (state = { user: null, loading: false }, action) => {
+
     switch(action.type) {
         case AUTH:
             localStorage.setItem('user', JSON.stringify({...action.data}))

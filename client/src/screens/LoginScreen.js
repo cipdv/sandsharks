@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 //actions
 import { login } from '../actions/userActions'
 
@@ -41,6 +41,9 @@ const LoginScreen = () => {
                 </div>
                 <button type="submit" className='btn'>Login</button>
             </form>
+            <div>
+                <Link to='/register'>Haven't registered yet? Click here to sign up!</Link>
+            </div>
         </>
     )
 }

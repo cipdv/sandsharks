@@ -1,70 +1,21 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
+import registrationValidation from '../utils/validate.js'
 
 //desc: register a new user and get jwt
 //route: POST /api/users/register
 //access: public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, confirmPassword, wantsEmailNotifications, waiverAndCodeSignature } = req.body
+    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature } = req.body
 
     try {
        //validation
-        const userExists = await User.findOne({email})
-        if(userExists) {
-            return res.status(400).json({
-                message: `User already exists`
-            })
-        }
+       const errs = await registrationValidation(req.body)
 
-        if(password !== confirmPassword) {
-            return res.status(400).json({
-                message: `Passwords do not match`
-            })
+        if(Object.keys(errs).length !== 0) {
+            return res.status(400).json({errs})
         }
-
-        if(!firstName) {
-            return res.status(400).json({
-                message: 'First name is required'
-            })
-        }
-
-        if(!lastName) {
-            return res.status(400).json({
-                message: 'Last name is required'
-            })
-        }
-
-        if(!pronouns) {
-            return res.status(400).json({
-                message: 'Pronouns are required'
-            })
-        }
-
-        if(!email) {
-            return res.status(400).json({
-                message: 'Email is required'
-            })
-        }
-
-        if(!password) {
-            return res.status(400).json({
-                message: 'Password is required'
-            })
-        }
-
-        if(!vballExperience) {
-            return res.status(400).json({
-                message: 'Please select your volleyball experience'
-            })
-        }
-
-        if(!waiverAndCodeSignature) {
-            return res.status(400).json({
-                message: 'You must agree to the waiver and code of conduct to become a member'
-            })
-        }
-
 
         //proceed with registering user
         const user = await User.create({
@@ -75,7 +26,8 @@ const registerUser = asyncHandler(async (req, res) => {
             email,
             vballExperience,
             password,
-            wantsEmailNotifications
+            wantsEmailNotifications,
+            waiverAndCodeSignature
         })
 
         //return user 

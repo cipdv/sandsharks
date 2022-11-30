@@ -1,6 +1,5 @@
 //api
 import * as api from '../api'
-import validate from '../components/validate'
 
 //constants
 import { AUTH, SHOW_LOADER, HIDE_LOADER } from '../constants/userConstants'
@@ -17,14 +16,13 @@ export const register = (formData, setErrors, navigate) => async (dispatch) => {
             dispatch({ type: AUTH, data})
             navigate('/dashboard')
         }
-
     } catch (error) {
-        const errors = validate(error.response.data.message)
-        setErrors(errors)
+        setErrors(error.response.data.errs)
         dispatch({ type: HIDE_LOADER })
     }
 }
 
+//login a user
 export const login = (formData, setErrors, navigate) => async (dispatch) => {
     dispatch({ type: SHOW_LOADER})
 
