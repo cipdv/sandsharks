@@ -4,6 +4,7 @@ import cors from 'cors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 //routes
 import userRoutes from './routes/userRoutes.js'
+import postRoutes from './routes/postRoutes.js'
 //configs
 import dotenv from 'dotenv'
 import connectdb from './config/db.js'
@@ -20,6 +21,7 @@ app.get('/', (req, res)=> {
 
 //routes
 app.use('/api/users', userRoutes)
+app.use('/api/posts', postRoutes)
 
 //middleware
 // app.use(notFound)
