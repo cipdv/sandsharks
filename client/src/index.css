@@ -62,3 +62,17 @@ label {
   color: white;
   background-color: #5c7a5c;
 }
+
+.post {
+  background-color: #bccfbc;
+  border-radius: 1rem;
+  padding: 1rem 1rem
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
+  background-color: #8fbc8f;
+}

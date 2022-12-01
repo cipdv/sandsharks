@@ -2,8 +2,6 @@ import React from 'react'
 
 const UserDashboard = ({user}) => {
 
-    console.log(user)
-
     return (
         <div>
             <h3>Welcome {user.preferredName}</h3>
