@@ -18,8 +18,8 @@ function App() {
       <Header user={user}/>
       <Routes>
         <Route path='/' element={user ? <DashboardScreen /> : <HomeScreen />} />
-        <Route path='/login' element={<LoginScreen />} />
-        <Route path='/register' element={<RegisterScreen />} />
+        <Route path='/login' element={user ? <DashboardScreen /> : <LoginScreen />} />
+        <Route path='/register' element={user ? <DashboardScreen /> : <RegisterScreen />} />
         <Route path='/dashboard' element={user ? <DashboardScreen /> : <LoginScreen />} />
       </Routes>
     </Router>

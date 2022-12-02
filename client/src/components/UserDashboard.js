@@ -1,13 +1,12 @@
 import React from 'react'
+import Posts from './Posts'
 
 const UserDashboard = ({user}) => {
 
     return (
         <div>
             <h3>Welcome {user.preferredName}</h3>
-            <div>
-                -see weekly posts, latest on top, "I'll be there/can't make it/maybe" button
-            </div>
+            <Posts />
             <div>
                 -update/delete account/profile
             </div>

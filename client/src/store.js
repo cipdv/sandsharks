@@ -4,10 +4,11 @@ import thunk from 'redux-thunk'
 //reducers
 import { authReducer } from './reducers/userReducers'
 import { loadingReducer } from './reducers/loadingReducers'
+import { postReducer } from './reducers/postReducers'
 
 const userInfoFromStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
-const reducers = { authReducer, loadingReducer }
+const reducers = { authReducer, loadingReducer, postReducer }
 const initialState = {
     authReducer: { user: userInfoFromStorage},
     loadingReducer: { loading: false }

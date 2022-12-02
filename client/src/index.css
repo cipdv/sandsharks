@@ -14,6 +14,7 @@ body {
 
 nav {
   background-color: rgb(238, 212, 192);
+  padding: 0.3rem
 }
 
 code {
@@ -46,6 +47,7 @@ label {
   margin-top: 20px;
   padding: 10px 20px;
   border-radius: 0.3em;
+  margin-right: 0.3em;
 }
 
 .btn:hover {
@@ -61,12 +63,15 @@ label {
 .error-msg {
   color: white;
   background-color: #5c7a5c;
+  padding: 0.2rem
 }
 
 .post {
   background-color: #bccfbc;
   border-radius: 1rem;
-  padding: 1rem 1rem
+  padding: 1rem 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .loader {
@@ -75,4 +80,8 @@ label {
   z-index: 1000;
   position: absolute;
   background-color: #8fbc8f;
+}
+
+.latest-post {
+  background-color: #bccfbc;
 }

@@ -13,7 +13,7 @@ const postSchema = mongoose.Schema({
     },
     endTime: {
         type: String
-    }
+    },
 }, {
     timestamps: true
 })

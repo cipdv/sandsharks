@@ -5,7 +5,7 @@ const HomeScreen = () => {
 
     return (
         <>
-            <Link to='/' className='link'><h2>Welcome to Sandsharks</h2></Link>
+            <h2>Welcome to Sandsharks</h2>
             <p>Toronto SandSharks is a beach volleyball league for LGBTQ+ folks and allies.</p>
             <div>
                 <h3>Who is welcome to join?</h3>
