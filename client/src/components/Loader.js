@@ -11,8 +11,8 @@ const LoadingScreen = () => {
   }
 
   return (
-    <div class="loader">
-        <img src={BallLoader} />
+    <div className="loader">
+        <img src={BallLoader} alt='loading'/>
   </div>
   )
 }

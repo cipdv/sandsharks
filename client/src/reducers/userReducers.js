@@ -11,10 +11,8 @@ export const authReducer = (state = { user: null, loading: false }, action) => {
             localStorage.clear()
             return { ...state, user: null, loading: false }
         case SHOW_LOADER:
-            console.log(state.loading)
             return { ...state, loading: true }
         case HIDE_LOADER:
-            console.log(state.loading)
             return { ...state, loading: false }
         default:
             return state

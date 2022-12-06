@@ -1,4 +1,4 @@
-import { GET_ALL_POSTS, SUBMIT_POST } from "../constants/postConstants"
+import { GET_ALL_POSTS, REPLY_TO_POST, SUBMIT_POST } from "../constants/postConstants"
 
 //authorize a user
 export const postReducer = (state = { posts: [] }, action) => {
@@ -8,6 +8,8 @@ export const postReducer = (state = { posts: [] }, action) => {
             return { ...state, posts: [...state.posts, action.data] }
         case GET_ALL_POSTS:
             return { ...state, posts: action.data }
+        case REPLY_TO_POST:
+            return { ...state, posts: [...state.posts, action.data]}
         default:
             return state
     }

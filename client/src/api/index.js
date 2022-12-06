@@ -17,3 +17,4 @@ export const login = (formData) => API.post(`/api/users/login`, formData)
 //Posts
 export const submitPost = (formData) => API.post(`/api/posts/`, formData)
 export const getAllPosts = () => API.get('/api/posts')
+export const replyToPost = (data, id) => API.put(`/api/posts/reply/${id}`, data)

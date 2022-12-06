@@ -7,6 +7,7 @@ const PostMessage = () => {
 
     const dispatch = useDispatch()
 
+    const [postTitle, setPostTitle] = useState('')
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [date, setDate] = useState('')
@@ -15,6 +16,7 @@ const PostMessage = () => {
     const [errors, setErrors] = useState({})
 
     const formData = {
+        postTitle,
         startTime,
         endTime,
         date,
@@ -22,6 +24,7 @@ const PostMessage = () => {
     }
 
     const clearStates = () => {
+        setPostTitle('')
         setStartTime('')
         setEndTime('')
         setDate('')
@@ -41,6 +44,10 @@ const PostMessage = () => {
             <div className='post'>
                 <h4>Post a Message to the Group</h4>
                 <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Post title:</label>
+                        <input type='text' value={postTitle} onChange={e=>setPostTitle(e.target.value)} />
+                    </div>
                     <div>
                         <label>Update for:</label>
                         <input type='date' value={date} onChange={e=>setDate(e.target.value)} />

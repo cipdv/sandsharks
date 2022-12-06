@@ -1,6 +1,6 @@
 import * as api from '../api/index'
 
-import { SUBMIT_POST, DELETE_POST, UPDATE_POST, GET_ALL_POSTS } from '../constants/postConstants'
+import { SUBMIT_POST, DELETE_POST, UPDATE_POST, GET_ALL_POSTS, REPLY_TO_POST } from '../constants/postConstants'
 import { SHOW_LOADING_SCREEN, HIDE_LOADING_SCREEN } from '../constants/loadingConstants'
 
 export const submitPost = (formData, setErrors) => async (dispatch) => {
@@ -12,8 +12,7 @@ export const submitPost = (formData, setErrors) => async (dispatch) => {
             dispatch({ type: SUBMIT_POST, data})
         }
     } catch (error) {
-        console.log('action error', error)
-        // setErrors({message: error.response.data.message})
+        setErrors({message: error.response.data.message})
     }
 
     dispatch({ type: HIDE_LOADING_SCREEN})
@@ -28,12 +27,10 @@ export const deletePost = () => async (dispatch) => {
 }
 
 export const getAllPosts = () => async (dispatch) => {
-    console.log('dispatched get all posts')
     dispatch({ type: SHOW_LOADING_SCREEN})
     try {
         const { data } = await api.getAllPosts()
         if (data) {
-            console.log('action', data)
             dispatch({ type: GET_ALL_POSTS, data})
         } 
     dispatch({ type: HIDE_LOADING_SCREEN})
@@ -44,4 +41,17 @@ export const getAllPosts = () => async (dispatch) => {
 
 export const getSinglePost = () => async (dispatch) => {
     
+}
+
+export const replyToPost = (reply, id, setErrors) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+    try {
+        const { data } = await api.replyToPost(reply, id)
+        if(data) {
+            dispatch({ type: REPLY_TO_POST, data})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+    dispatch({ type: HIDE_LOADING_SCREEN})
 }

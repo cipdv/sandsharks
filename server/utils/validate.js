@@ -1,6 +1,6 @@
 import User from '../models/userModels.js'
 
-export default async function registrationValidation (body) {
+export async function registrationValidation (body) {
     const { firstName, lastName, pronouns, email, vballExperience, password, confirmPassword, waiverAndCodeSignature } = body
 
     let errs = {}
@@ -42,5 +42,15 @@ export default async function registrationValidation (body) {
         errs.waiverAndCodeSignature = 'You must agree to the waiver and code of conduct to become a member'          
     }
     
+    return errs
+}
+
+export async function postValidation (body) {
+    const {  } = body
+
+    let errs = {}
+
+
+
     return errs
 }

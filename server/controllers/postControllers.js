@@ -5,10 +5,10 @@ import Post from '../models/postModels.js'
 //route: POST /api/posts
 //access: private admin
 const submitPost = asyncHandler(async (req, res) => {
-    const { message, date, startTime, endTime } = req.body
+    const { postTitle, message, date, startTime, endTime } = req.body
     try {
         if (message) {
-            const post = await new Post({message, date, startTime, endTime})
+            const post = await new Post({postTitle, message, date, startTime, endTime, createdAt: new Date()})
             const newPost = await post.save()
             res.status(200).json(newPost)
         } else {
@@ -16,6 +16,7 @@ const submitPost = asyncHandler(async (req, res) => {
         }
     } catch (error) {
         console.log(error)
+        res.status(400).json({message: 'Something went wrong, check all fields and try again'})
     }
 })
 
@@ -35,4 +36,27 @@ const getPosts = asyncHandler(async(req, res) => {
     }
 })
 
-export { submitPost, getPosts }
+//desc: update post with a reply
+//route: PUT /api/posts/reply/:id
+//access: private
+const replyToPost = asyncHandler(async(req, res) => {
+
+    const postId = req.params.id
+
+    try {
+        const post = await Post.findById(postId)
+        post.replies.push(req.body)
+        post.isNew
+        post.save()
+
+        if (post) {
+            res.status(200).json(post)
+        } else {
+            return res.status(400).json({message: 'Something went wrong, try again'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export { submitPost, getPosts, replyToPost }

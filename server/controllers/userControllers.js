@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
-import registrationValidation from '../utils/validate.js'
+import {registrationValidation} from '../utils/validate.js'
 
 //desc: register a new user and get jwt
 //route: POST /api/users/register

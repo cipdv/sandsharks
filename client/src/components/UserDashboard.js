@@ -6,7 +6,7 @@ const UserDashboard = ({user}) => {
     return (
         <div>
             <h3>Welcome {user.preferredName}</h3>
-            <Posts />
+            <Posts user={user}/>
             <div>
                 -update/delete account/profile
             </div>
