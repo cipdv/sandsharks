@@ -55,6 +55,21 @@ label {
   cursor: pointer;
 }
 
+.btn-pink {
+  background-color: rgb(197, 171, 151);
+  border: none;
+  color: rgb(255, 253, 245);
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 0.3em;
+  margin-right: 0.3em;
+}
+
+.btn-pink:hover {
+  background-color: rgb(238, 212, 192);
+  cursor: pointer;
+}
+
 .form-field {
   margin-top: 1rem;
   margin-right: 1rem;

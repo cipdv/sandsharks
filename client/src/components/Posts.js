@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { replyToPost } from '../actions/postActions'
+import { replyToPost, deletePost } from '../actions/postActions'
 
 const Posts = ({user}) => {
 
@@ -45,6 +45,18 @@ const Posts = ({user}) => {
         }
     }
 
+    const handleUpdatePost = (e) => {
+        e.preventDefault()
+        console.log('update')
+    }
+
+    const handleDelete = (postId) => {
+        if(latestPost && window.confirm('Are you sure you want to delete this post?')) {
+            dispatch(deletePost(postId, setErrors))
+        }
+    }
+
+
     return (
         <div className='post'>
             <h4>{latestPost && latestPost.postTitle}</h4>
@@ -53,8 +65,8 @@ const Posts = ({user}) => {
             </p>
             <h5>When: {latestPost && latestPost.date}</h5>
             <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
-            <h5>Who's coming:</h5>
             <div>
+                <h5>Who's coming:</h5>
                 {
                     latestPost && latestPost.replies.map((reply)=>{
                         if(reply.reply === 'yes') {
@@ -73,6 +85,16 @@ const Posts = ({user}) => {
                 <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
                 {errors.message && <p className='error-msg'>{errors.message}</p>}
             </div>
+            {
+                user.adminStatus === 'yes' ? (
+                    <div>
+                        <button className='btn-pink' onClick={()=> handleUpdatePost(latestPost._id)}>Update post</button>
+                        <button className='btn-pink' onClick={() => handleDelete(latestPost._id)}>Delete post</button>
+                    </div>
+                ) : (
+                    <></>
+                )
+            }
         </div>
     )
 }

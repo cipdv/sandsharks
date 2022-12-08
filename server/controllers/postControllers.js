@@ -1,3 +1,4 @@
+import e from 'express'
 import asyncHandler from 'express-async-handler'
 import Post from '../models/postModels.js'
 
@@ -8,9 +9,9 @@ const submitPost = asyncHandler(async (req, res) => {
     const { postTitle, message, date, startTime, endTime } = req.body
     try {
         if (message) {
-            const post = await new Post({postTitle, message, date, startTime, endTime, createdAt: new Date()})
+            const post = await new Post({postTitle, message, date, startTime, endTime, replies: [], createdAt: new Date()})
             const newPost = await post.save()
-            res.status(200).json(newPost)
+            return res.status(200).json(newPost)
         } else {
             return res.status(401).json({message: 'Message required'})
         }
@@ -27,7 +28,7 @@ const getPosts = asyncHandler(async(req, res) => {
     try {
         const posts = await Post.find()
         if (posts) {
-            res.status(200).json(posts)
+            return res.status(200).json(posts)
         } else {
             return res.status(400).json({message: 'No posts available'})
         }
@@ -50,7 +51,7 @@ const replyToPost = asyncHandler(async(req, res) => {
         post.save()
 
         if (post) {
-            res.status(200).json(post)
+            return res.status(200).json(post)
         } else {
             return res.status(400).json({message: 'Something went wrong, try again'})
         }
@@ -59,4 +60,29 @@ const replyToPost = asyncHandler(async(req, res) => {
     }
 })
 
-export { submitPost, getPosts, replyToPost }
+//desc: delete a specific post
+//route: DELETE /api/posts/:id
+//access: private admin
+const deletePost = asyncHandler(async(req, res)=> {
+    const postId = req.params.id
+
+    try {
+        //find post and delete it if there is one
+        const post = await Post.findById(postId)
+        if (post) {
+            await post.remove()
+        }
+
+        //find and return all remaining posts
+        const posts = await Post.find()
+        if (posts) {
+            return res.status(200).json(posts)
+        } else {
+            return res.status(400).json({message: 'No posts available'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export { submitPost, getPosts, replyToPost, deletePost}

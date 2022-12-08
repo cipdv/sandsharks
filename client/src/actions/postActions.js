@@ -22,8 +22,17 @@ export const updatePost = () => async (dispatch) => {
     
 }
 
-export const deletePost = () => async (dispatch) => {
-    
+export const deletePost = (postId, setErrors) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN })
+    try {
+        const {data} = await api.deletePost(postId)
+        if (data) {
+            dispatch({ type: DELETE_POST, data})
+        }
+        dispatch({ type: HIDE_LOADING_SCREEN})
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }    
 }
 
 export const getAllPosts = () => async (dispatch) => {
