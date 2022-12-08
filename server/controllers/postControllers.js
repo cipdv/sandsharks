@@ -85,4 +85,23 @@ const deletePost = asyncHandler(async(req, res)=> {
     }
 })
 
-export { submitPost, getPosts, replyToPost, deletePost}
+//desc: update a post
+//route: PUT /api/posts/:id
+//access: private admin
+const updatePost = asyncHandler(async(req,res)=>{
+    const postId = req.params.id
+
+    try {
+        //find the post and update it
+        const post = await Post.findByIdAndUpdate(postId, req.body, {new: true})
+        if (post) {
+            return res.status(200).json(post)
+        } else {
+            res.status(400).json({message: 'No post to update'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export { submitPost, getPosts, replyToPost, deletePost, updatePost}

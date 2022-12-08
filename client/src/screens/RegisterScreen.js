@@ -43,7 +43,7 @@ const RegisterScreen = () => {
     }
 
     return (
-        <>
+        <div className='post'>
             <h4>Become a SandShark</h4>
             <p>Complete the form below to become a member and get updates for when we'll be playing.</p>
             <form onSubmit={submitForm}>
@@ -100,7 +100,7 @@ const RegisterScreen = () => {
                 </div>
                 <button type="submit" className='btn'>Register</button>
             </form>
-        </>
+        </div>
     )
 }
 

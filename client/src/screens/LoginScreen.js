@@ -26,7 +26,7 @@ const LoginScreen = () => {
     }
 
     return (
-        <>
+        <div className='post'>
             <h4>Sandshark Member Login</h4>
             <form onSubmit={submitForm}>
                 <div>
@@ -44,7 +44,7 @@ const LoginScreen = () => {
             <div>
                 <Link to='/register'>Haven't registered yet? Click here to sign up!</Link>
             </div>
-        </>
+        </div>
     )
 }
 

@@ -6,14 +6,17 @@ const AdminDashboard = ({user}) => {
 
     return (
         //admin dashboard 
-        //-make/update/delete weekly posts
         //-view/update/delete user profiles
         <>
             <div>
                 <h3>Welcome {user.preferredName}</h3>
             </div>
-            <PostMessage />
-            <Posts user={user}/>
+            <div>
+                <PostMessage />
+            </div>
+            <div>
+                <Posts user={user}/>
+            </div>
         </>
     )
 }

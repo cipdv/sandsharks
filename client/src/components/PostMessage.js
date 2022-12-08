@@ -42,7 +42,7 @@ const PostMessage = () => {
         <>
             <LoadingScreen />
             <div className='post'>
-                <h4>Post a Message to the Group</h4>
+                <h4>Post a New Message to the Group</h4>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Post title:</label>

@@ -18,8 +18,20 @@ export const submitPost = (formData, setErrors) => async (dispatch) => {
     dispatch({ type: HIDE_LOADING_SCREEN})
 }
 
-export const updatePost = () => async (dispatch) => {
-    
+export const updatePost = (formData, postId, setErrors) => async (dispatch) => {
+
+    dispatch({ type: SHOW_LOADING_SCREEN})
+
+    try {
+        const {data} = await api.updatePost(formData, postId)
+        if(data) {
+            dispatch({ type: UPDATE_POST, data})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+
+    dispatch({ type: HIDE_LOADING_SCREEN})
 }
 
 export const deletePost = (postId, setErrors) => async (dispatch) => {
