@@ -46,14 +46,35 @@ const replyToPost = asyncHandler(async(req, res) => {
 
     try {
         const post = await Post.findById(postId)
-        post.replies.push(req.body)
-        post.isNew
-        post.save()
 
         if (post) {
-            return res.status(200).json(post)
+            const alreadyReplied = post.replies.find(
+                p => p.email === req.body.email
+            )
+
+            if (!alreadyReplied) {
+                post.replies.push(req.body)
+                post.isNew
+                post.save()
+                return res.status(201).json(post)
+            } else {
+                if (alreadyReplied.reply === req.body.reply) {
+                    return res.status(400).json({message: 'You already replied :)'})
+                } else {
+                    const newReply = await Post.findByIdAndUpdate({"_id": postId, "replies._id": alreadyReplied._id}, 
+                        {$set:
+                            {
+                              "replies.$[i].reply": req.body.reply
+                            }
+                          },{
+                              new:true,
+                              arrayFilters: [{ 'i._id': alreadyReplied._id }],
+                        })
+                    return res.status(201).json(newReply)
+                }
+            }
         } else {
-            return res.status(400).json({message: 'Something went wrong, try again'})
+            res.status(400).json({message: 'Something went wrong, try again'})
         }
     } catch (error) {
         console.log(error)
@@ -97,7 +118,7 @@ const updatePost = asyncHandler(async(req,res)=>{
         if (post) {
             return res.status(200).json(post)
         } else {
-            res.status(400).json({message: 'No post to update'})
+            return res.status(400).json({message: 'No post to update'})
         }
     } catch (error) {
         console.log(error)

@@ -44,6 +44,7 @@ const Posts = ({user}) => {
 
     const submitYes = async (e) => {
         e.preventDefault()
+        setErrors({})
         if(latestPost) {
             dispatch(replyToPost({...data, reply: 'yes'}, latestPost._id, setErrors))
         } else {
@@ -53,6 +54,7 @@ const Posts = ({user}) => {
 
     const submitNo = (e) => {
         e.preventDefault()
+        setErrors({})
         if(latestPost) {
             dispatch(replyToPost({...data, reply: 'no'}, latestPost._id, setErrors))
         } else {
@@ -62,6 +64,7 @@ const Posts = ({user}) => {
 
     const submitMaybe = (e) => {
         e.preventDefault()
+        setErrors({})
         if(latestPost) {
             dispatch(replyToPost({...data, reply: 'maybe'}, latestPost._id, setErrors))
         } else {
@@ -108,15 +111,37 @@ const Posts = ({user}) => {
                             <input type='time' value={endTime} onChange={e=>setEndTime(e.target.value)} />
                         </div>
                         <div>
-                            <h5>Who's coming:</h5>
+                            <h4>Who's coming:</h4>
+                            <h5>Yes:</h5>
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'yes') {
                                         return <p>{reply.name}</p>
-                                    } else if (reply.reply === 'no' || 'maybe') {
-                                        return <p></p>
-                                    } else {
-                                        return <p>No one yet</p>
+                                    } 
+                                    else {
+                                        return <></>
+                                    }
+                                })
+                            }
+                            <h5>Maybe:</h5>
+                            {
+                                latestPost && latestPost.replies.map((reply)=>{
+                                    if(reply.reply === 'maybe') {
+                                        return <p>{reply.name}</p>
+                                    } 
+                                    else {
+                                        return <></>
+                                    }
+                                })
+                            }
+                            <h5>No:</h5>
+                            {
+                                latestPost && latestPost.replies.map((reply)=>{
+                                    if(reply.reply === 'no') {
+                                        return <p>{reply.name}</p>
+                                    } 
+                                    else {
+                                        return <></>
                                     }
                                 })
                             }
@@ -125,7 +150,6 @@ const Posts = ({user}) => {
                             <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
                             <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
                             <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
-                            {errors.message && <p className='error-msg'>{errors.message}</p>}
                         </div>
                         <div>
                             <button className='btn-pink' onClick={()=> handleUpdatePost(latestPost._id)}>Update post</button>
@@ -139,20 +163,33 @@ const Posts = ({user}) => {
                         <p>
                             {latestPost && latestPost.message}
                         </p>
-                        <h5>When: {latestPost && latestPost.date}</h5>
-                        <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
+                        {
+                            latestPost && latestPost.date ? (
+                                <h5>When: {latestPost.date}</h5>
+                            ) : (<></>)
+                        }
+                        {
+                            latestPost && latestPost.startTime ? (
+                                <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
+                            ) : (<></>)
+                        }
                         <div>
-                            <h5>Who's coming:</h5>
                             {
-                                latestPost && latestPost.replies.map((reply)=>{
-                                    if(reply.reply === 'yes') {
-                                        return <p>{reply.name}</p>
-                                    } else if (reply.reply === 'no' || 'maybe') {
-                                        return <p></p>
-                                    } else {
-                                        return <p>No one yet</p>
-                                    }
-                                })
+                                latestPost && latestPost.replies.length !== 0 ? (
+                                    <div>
+                                        <h5>Who's coming:</h5>                                  
+                                        {latestPost.replies.map((reply)=>{
+                                            if(reply.reply === 'yes') {
+                                                return <p id={reply._id}>{reply.name}</p>
+                                            } else if (reply.reply === 'no' || 'maybe') {
+                                                return <p id={reply._id}></p>
+                                            } else {
+                                                return <p id={reply._id}>No one yet</p>
+                                            }
+                                        })
+                                        }
+                                    </div>
+                                ) : (<></>)
                             }
                         </div>
                         <div>

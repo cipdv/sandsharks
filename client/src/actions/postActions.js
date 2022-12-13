@@ -68,7 +68,9 @@ export const replyToPost = (reply, id, setErrors) => async (dispatch) => {
     dispatch({ type: SHOW_LOADING_SCREEN})
     try {
         const { data } = await api.replyToPost(reply, id)
-        if(data) {
+        if(data.message === 'You already replied :)') {
+            dispatch({ type: HIDE_LOADING_SCREEN})
+        } else {
             dispatch({ type: REPLY_TO_POST, data})
         }
     } catch (error) {
