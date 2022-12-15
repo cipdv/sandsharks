@@ -6,10 +6,10 @@ import Post from '../models/postModels.js'
 //route: POST /api/posts
 //access: private admin
 const submitPost = asyncHandler(async (req, res) => {
-    const { postTitle, message, date, startTime, endTime } = req.body
+    const { postTitle, message, date, startTime, endTime, seekingReplies } = req.body
     try {
-        if (message) {
-            const post = await new Post({postTitle, message, date, startTime, endTime, replies: [], createdAt: new Date()})
+        if (req.body.message) {
+            const post = await new Post({...req.body, replies: [], createdAt: new Date()})
             const newPost = await post.save()
             return res.status(200).json(newPost)
         } else {

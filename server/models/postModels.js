@@ -42,6 +42,20 @@ const postSchema = mongoose.Schema({
     endTime: {
         type: String
     },
+    beginnerClinicOffered: {
+        type: Boolean,
+        default: false
+    },
+    beginnerClinicStartTime: {
+        type: String
+    },
+    beginnerClinicEndTime: {
+        type: String
+    },
+    seekingReplies: {
+        type: Boolean,
+        default: true
+    },
     replies: [postRepliesSchema]
 }, {
     timestamps: true

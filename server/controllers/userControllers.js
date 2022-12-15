@@ -85,4 +85,32 @@ const loginUser = asyncHandler(async (req, res) => {
     
 })
 
-export { registerUser, loginUser }
+const updateProfile = asyncHandler(async (req, res) => {
+    const userId = req.params.id
+    
+    try {
+        //find the user and update it
+        const user = await User.findByIdAndUpdate(userId, req.body, {new: true})
+        if (user) {
+            return res.status(200).json({
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                preferredName: user.preferredName,
+                pronouns: user.pronouns,
+                vballExperience: user.vballExperience,
+                email: user.email,
+                adminStatus: user.adminStatus,
+                wantsEmailNotifications: user.wantsEmailNotifications,
+                token: generateToken(user._id)
+            })
+        } else {
+            return res.status(400).json({message: 'Profile was not found'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
+export { registerUser, loginUser, updateProfile }
