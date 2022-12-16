@@ -124,14 +124,17 @@ const updateProfile = asyncHandler(async (req, res) => {
 //access: private
 const deleteProfile = asyncHandler(async (req, res) => {
     const {email, password} = req.body
-
-    console.log(req.body)
+    const userId = req.params.id
     
     try {
         //find the user
-        const user = await User.findOne({email})
+        const user = await User.findById(userId)
         if (!user) {
-            return res.status(400).json({message: 'Profile not found, check email spelling'})
+            return res.status(400).json({message: 'Profile not found'})
+        }
+        //check if email matches
+        if (user && user.email !== email) {
+            return res.status(400).json({message: 'Incorrect email, check email spelling'})
         }
         //if password matches delete the user
         if(user && (await user.matchPassword(password))) {

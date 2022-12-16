@@ -207,55 +207,63 @@ const Posts = ({user}) => {
                         {errors.message && <p className='error-msg'>{errors.message}</p>}
                     </div>
                 ) : (
-                    <div>
-                        <h4>{latestPost && latestPost.postTitle}</h4>
-                        <p>
-                            {latestPost && latestPost.message}
-                        </p>
-                        {
-                            latestPost && latestPost.date ? (
-                                <h5>When: {latestPost.date}</h5>
-                            ) : (<></>)
-                        }
-                        {
-                            latestPost && latestPost.startTime ? (
-                                <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
-                            ) : (<></>)
-                        }
-                        
-                        <div>
-                            {
-                                latestPost && latestPost.replies.length !== 0 ? (
-                                    <div>
-                                        <h5>Who's coming:</h5>                                  
-                                        {latestPost.replies.map((reply)=>{
-                                            if(reply.reply === 'yes') {
-                                                return <p id={reply._id}>{reply.name}</p>
-                                            } else if (reply.reply === 'no' || 'maybe') {
-                                                return <p id={reply._id}></p>
-                                            } else {
-                                                return <p id={reply._id}>No one yet</p>
-                                            }
-                                        })
-                                        }
-                                    </div>
-                                ) : (<></>)
-                            }
-                        </div>
-                        
-                        {
-                            latestPost && latestPost.seekingReplies ? (
+                    <>
+                        {!latestPost ? (
+                            <div className='post'>
+                                <p>No upcoming beach volleyball days have been set. Keep checking back for updates :D</p>
+                            </div>
+                        ) : (
+                            <div>
+                                <h4>{latestPost && latestPost.postTitle}</h4>
+                                <p>
+                                    {latestPost && latestPost.message}
+                                </p>
+                                {
+                                    latestPost && latestPost.date ? (
+                                        <h5>When: {latestPost.date}</h5>
+                                    ) : (<></>)
+                                }
+                                {
+                                    latestPost && latestPost.startTime ? (
+                                        <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
+                                    ) : (<></>)
+                                }
+                                
                                 <div>
-                                    <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
-                                    <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
-                                    <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
-                                    {errors.message && <p className='error-msg'>{errors.message}</p>}
+                                    {
+                                        latestPost && latestPost.replies.length !== 0 ? (
+                                            <div>
+                                                <h5>Who's coming:</h5>                                  
+                                                {latestPost.replies.map((reply)=>{
+                                                    if(reply.reply === 'yes') {
+                                                        return <p id={reply._id}>{reply.name}</p>
+                                                    } else if (reply.reply === 'no' || 'maybe') {
+                                                        return <p id={reply._id}></p>
+                                                    } else {
+                                                        return <p id={reply._id}>No one yet</p>
+                                                    }
+                                                })
+                                                }
+                                            </div>
+                                        ) : (<></>)
+                                    }
                                 </div>
-                            ) : (
-                                <></>
-                            )
-                        }                      
-                    </div>
+                                
+                                {
+                                    latestPost && latestPost.seekingReplies ? (
+                                        <div>
+                                            <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
+                                            <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
+                                            <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
+                                            {errors.message && <p className='error-msg'>{errors.message}</p>}
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )
+                                }                      
+                            </div>
+                        )}
+                    </>
                 )
             }
         </div>

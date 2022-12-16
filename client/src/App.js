@@ -24,7 +24,7 @@ function App() {
         <Route path='/register' element={user ? <DashboardScreen /> : <RegisterScreen />} />
         <Route path='/dashboard' element={user ? <DashboardScreen /> : <LoginScreen />} />
         <Route path='/updateprofile' element={user ? <UpdateProfileScreen /> : <LoginScreen />} />
-        <Route path='/deleteprofile' element={user ? <DeleteProfileScreen /> : <LoginScreen />} />
+        <Route path='/deleteprofile' element={user ? <DeleteProfileScreen user={user} /> : <LoginScreen />} />
       </Routes>
     </Router>
   );

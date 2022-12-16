@@ -18,9 +18,6 @@ const UserDashboard = ({user}) => {
                 <BeginnerClinicPost user={user}/>           
             )}
             <div>
-                -delete profile
-            </div>
-            <div>
                 -contact Sandsharks organization
             </div>
             <div>

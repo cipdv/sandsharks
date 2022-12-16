@@ -24,3 +24,4 @@ export const authReducer = (state = { user: null, loading: false }, action) => {
             return state
     }
 }
+

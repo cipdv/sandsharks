@@ -10,6 +10,6 @@ const router = express.Router()
 router.route('/register').post(registerUser)
 router.route('/login').post(loginUser)
 router.route('/updateprofile/:id').put(protect, updateProfile)
-router.route('/deleteprofile').post(protect, deleteProfile)
+router.route('/deleteprofile/:id').post(protect, deleteProfile)
 
 export default router

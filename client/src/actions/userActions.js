@@ -69,11 +69,11 @@ export const updateProfile = (formData, setErrors, navigate, userId) => async (d
 }
 
 // user deletes their own profile
-export const deleteProfile = (formData, setErrors, navigate) => async (dispatch) => {
+export const deleteProfile = (formData, setErrors, navigate, userId) => async (dispatch) => {
     dispatch({ type: SHOW_LOADING_SCREEN})
-
+    
     try {
-        const {data} = await api.deleteProfile(formData)
+        const {data} = await api.deleteProfile(formData, userId)
         if(data.message === 'Profile deleted') {
             dispatch({ type: DELETE_PROFILE})
             window.alert('Your profile was deleted')

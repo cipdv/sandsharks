@@ -55,7 +55,7 @@ const replyToPost = asyncHandler(async(req, res) => {
             if (!alreadyReplied) {
                 post.replies.push(req.body)
                 post.isNew
-                post.save()
+                await post.save()
                 return res.status(201).json(post)
             } else {
                 if (alreadyReplied.reply === req.body.reply) {
@@ -143,7 +143,7 @@ const replyToClinic = asyncHandler(async(req, res) => {
             if (!alreadyReplied) {
                 post.beginnerClinic[0].replies.push(req.body)
                 post.isNew
-                post.save()
+                await post.save()
                 return res.status(201).json(post)
             } else {
                 if (alreadyReplied.reply === req.body.reply) {
@@ -151,7 +151,7 @@ const replyToClinic = asyncHandler(async(req, res) => {
                 } else {
                     alreadyReplied.reply = req.body.reply
                     post.isNew
-                    post.save()
+                    await post.save()
                     return res.status(200).json(post)                  
                 }
             }

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { deleteProfile } from '../actions/userActions'
 
-const DeleteProfileScreen = () => {
+const DeleteProfileScreen = ({user}) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -19,8 +19,8 @@ const DeleteProfileScreen = () => {
 
     const handleDelete = (e) => {
         e.preventDefault()
-        if(window.confirm('Are you sure you want to delete your profile? This cannot be undone.')) {
-            dispatch(deleteProfile(formData, setErrors, navigate))
+        if(window.confirm(`Are you sure you want to delete your profile? This can't be undone.`)) {
+            dispatch(deleteProfile(formData, setErrors, navigate, user._id))
         }
     }
 
