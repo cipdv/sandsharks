@@ -132,8 +132,6 @@ const replyToClinic = asyncHandler(async(req, res) => {
 
     const postId = req.params.id
 
-    console.log(req.body.reply)
-
     try {
         const post = await Post.findById(postId)
 
@@ -154,23 +152,7 @@ const replyToClinic = asyncHandler(async(req, res) => {
                     alreadyReplied.reply = req.body.reply
                     post.isNew
                     post.save()
-                    console.log(post)
-                    return res.status(200).json(post)
-                   
-                    // const newReply = await Post.findByIdAndUpdate({"_id": postId}, 
-                    //     {$set:
-                    //         {
-                    //           "beginnerClinic[0].replies.$[i].reply": req.body.reply
-                    //         }
-                    //       },{
-                    //           new:true,
-                    //           arrayFilters: [{ 'i._id': alreadyReplied._id }],
-                    //     })
-                    // if (newReply) {
-                    //     console.log('new reply', newReply.beginnerClinic[0])
-                    //     return res.status(201).json(newReply)
-                    // }
-                    
+                    return res.status(200).json(post)                  
                 }
             }
         } else {
