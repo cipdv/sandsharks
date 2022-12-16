@@ -125,4 +125,60 @@ const updatePost = asyncHandler(async(req,res)=>{
     }
 })
 
-export { submitPost, getPosts, replyToPost, deletePost, updatePost}
+//desc: update post with a reply to beginner clinic
+//route: PUT /api/posts/replytoclinic/:id
+//access: private
+const replyToClinic = asyncHandler(async(req, res) => {
+
+    const postId = req.params.id
+
+    console.log(req.body.reply)
+
+    try {
+        const post = await Post.findById(postId)
+
+        if (post) {
+            const alreadyReplied = post.beginnerClinic[0].replies.find(
+                p => p.email === req.body.email
+            )
+
+            if (!alreadyReplied) {
+                post.beginnerClinic[0].replies.push(req.body)
+                post.isNew
+                post.save()
+                return res.status(201).json(post)
+            } else {
+                if (alreadyReplied.reply === req.body.reply) {
+                    return res.status(400).json({message: 'You already replied :)'})
+                } else {
+                    alreadyReplied.reply = req.body.reply
+                    post.isNew
+                    post.save()
+                    console.log(post)
+                    return res.status(200).json(post)
+                   
+                    // const newReply = await Post.findByIdAndUpdate({"_id": postId}, 
+                    //     {$set:
+                    //         {
+                    //           "beginnerClinic[0].replies.$[i].reply": req.body.reply
+                    //         }
+                    //       },{
+                    //           new:true,
+                    //           arrayFilters: [{ 'i._id': alreadyReplied._id }],
+                    //     })
+                    // if (newReply) {
+                    //     console.log('new reply', newReply.beginnerClinic[0])
+                    //     return res.status(201).json(newReply)
+                    // }
+                    
+                }
+            }
+        } else {
+            res.status(400).json({message: 'Something went wrong, try again'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export { submitPost, getPosts, replyToPost, deletePost, updatePost, replyToClinic}

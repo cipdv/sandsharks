@@ -11,12 +11,14 @@ API.interceptors.request.use((req) => {
     return req;
   });
 
-//Auth
+//Users
 export const register = (formData) => API.post('/api/users/register', formData)
 export const login = (formData) => API.post(`/api/users/login`, formData)
+export const updateProfile = (formData, userId) => API.put(`/api/users/updateprofile/${userId}`, formData)
 //Posts
 export const submitPost = (formData) => API.post(`/api/posts/`, formData)
 export const getAllPosts = () => API.get('/api/posts')
 export const replyToPost = (data, id) => API.put(`/api/posts/reply/${id}`, data)
 export const deletePost = (postId) => API.delete(`/api/posts/${postId}`)
 export const updatePost = (formData, postId) => API.put(`/api/posts/${postId}`, formData)
+export const replyToClinic = (data, id) => API.put(`/api/posts/replytoclinic/${id}`, data)

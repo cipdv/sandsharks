@@ -19,6 +19,40 @@ const postRepliesSchema = mongoose.Schema({
     }
 })
 
+const begClinicRepliesSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true
+    },
+    reply: {
+        type: String,
+        required: true
+    }
+})
+
+const beginnerClinicSchema = mongoose.Schema({
+    beginnerClinicOffered: {
+        type: Boolean,
+        default: false
+    },
+    beginnerClinicStartTime: {
+        type: String
+    },
+    beginnerClinicEndTime: {
+        type: String
+    },
+    replies: [begClinicRepliesSchema]
+})
+
+
 
 const postSchema = mongoose.Schema({
     postTitle: {
@@ -42,16 +76,7 @@ const postSchema = mongoose.Schema({
     endTime: {
         type: String
     },
-    beginnerClinicOffered: {
-        type: Boolean,
-        default: false
-    },
-    beginnerClinicStartTime: {
-        type: String
-    },
-    beginnerClinicEndTime: {
-        type: String
-    },
+    beginnerClinic: [beginnerClinicSchema],
     seekingReplies: {
         type: Boolean,
         default: true

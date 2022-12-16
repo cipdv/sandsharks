@@ -14,6 +14,10 @@ const Posts = ({user}) => {
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [date, setDate] = useState('')
+    const [beginnerClinicOffered, setBeginnerClinicOffered] = useState(false)
+    const [beginnerClinicStartTime, setBeginnerClinicStartTime] = useState('')
+    const [beginnerClinicEndTime, setBeginnerClinicEndTime] = useState('')
+    const [seekingReplies, setSeekingReplies] = useState(false)
 
     const [errors, setErrors] = useState({})
 
@@ -24,6 +28,10 @@ const Posts = ({user}) => {
             setStartTime(latestPost.startTime)
             setEndTime(latestPost.endTime)
             setDate(latestPost.date)
+            setSeekingReplies(latestPost.seekingReplies)
+            setBeginnerClinicOffered(latestPost.beginnerClinic[0].beginnerClinicOffered)
+            setBeginnerClinicStartTime(latestPost.beginnerClinic[0].beginnerClinicStartTime)
+            setBeginnerClinicEndTime(latestPost.beginnerClinic[0].beginnerClinicEndTime)
         }
     }, [latestPost])
 
@@ -39,7 +47,11 @@ const Posts = ({user}) => {
         message,
         startTime,
         endTime,
-        date
+        date,
+        beginnerClinicOffered,
+        beginnerClinicStartTime,
+        beginnerClinicEndTime,
+        seekingReplies
     }
 
     const submitYes = async (e) => {
@@ -84,6 +96,15 @@ const Posts = ({user}) => {
         }
     }
 
+    const countReplies = (rep) => {
+        if(latestPost) {
+            const numOfYes = latestPost.replies.filter(r => r.reply === rep).length
+            return (
+                <>{numOfYes}</>
+            )
+        }
+    }
+
     return (
         <div className='post'>  
             {
@@ -112,33 +133,33 @@ const Posts = ({user}) => {
                         </div>
                         <div>
                             <h4>Who's coming:</h4>
-                            <h5>Yes:</h5>
+                            <h5>Yes: {countReplies('yes')}</h5>
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'yes') {
-                                        return <p>{reply.name}</p>
+                                        return <p id={reply._id}>{reply.name}</p>
                                     } 
                                     else {
                                         return <></>
                                     }
                                 })
                             }
-                            <h5>Maybe:</h5>
+                            <h5>Maybe: {countReplies('maybe')}</h5>
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'maybe') {
-                                        return <p>{reply.name}</p>
+                                        return <p id={reply._id}>{reply.name}</p>
                                     } 
                                     else {
                                         return <></>
                                     }
                                 })
                             }
-                            <h5>No:</h5>
+                            <h5>No: {countReplies('no')}</h5>
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'no') {
-                                        return <p>{reply.name}</p>
+                                        return <p id={reply._id}>{reply.name}</p>
                                     } 
                                     else {
                                         return <></>
@@ -147,10 +168,36 @@ const Posts = ({user}) => {
                             }
                         </div>
                         <div>
-                            <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
-                            <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
-                            <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
+                            <label>Beginner clinic offered?</label>
+                            <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>setBeginnerClinicOffered(e.target.checked)} />
                         </div>
+                        {beginnerClinicOffered ? (
+                            <div>
+                                <div>
+                                    <label>Clinic start time</label>
+                                    <input type='time' value={beginnerClinicStartTime} onChange={e=>setBeginnerClinicStartTime(e.target.value)} />
+                                </div>
+                                <div>
+                                    <label>Clinic end time</label>
+                                    <input type='time' value={beginnerClinicEndTime} onChange={e=>setBeginnerClinicEndTime(e.target.value)} />
+                                </div>
+                            </div>
+                        ) : (<></>)}
+                        <div>
+                            <label>Seeking replies?</label>
+                            <input type='checkbox' checked={seekingReplies} onChange={e=>setSeekingReplies(e.target.checked)} />
+                        </div>
+                        {
+                            latestPost && latestPost.seekingReplies ? (
+                                <div>
+                                    <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
+                                    <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
+                                    <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
+                                </div>
+                            ) : (
+                                <></>
+                            )
+                        }
                         <div>
                             <button className='btn-pink' onClick={()=> handleUpdatePost(latestPost._id)}>Update post</button>
                             <button className='btn-pink' onClick={() => handleDeletePost(latestPost._id)}>Delete post</button>
@@ -173,6 +220,7 @@ const Posts = ({user}) => {
                                 <h5>Setting up at {latestPost && latestPost.startTime} until {latestPost && latestPost.endTime}</h5>
                             ) : (<></>)
                         }
+                        
                         <div>
                             {
                                 latestPost && latestPost.replies.length !== 0 ? (
@@ -192,12 +240,19 @@ const Posts = ({user}) => {
                                 ) : (<></>)
                             }
                         </div>
-                        <div>
-                            <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
-                            <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
-                            <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
-                            {errors.message && <p className='error-msg'>{errors.message}</p>}
-                        </div>
+                        
+                        {
+                            latestPost && latestPost.seekingReplies ? (
+                                <div>
+                                    <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
+                                    <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
+                                    <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
+                                    {errors.message && <p className='error-msg'>{errors.message}</p>}
+                                </div>
+                            ) : (
+                                <></>
+                            )
+                        }                      
                     </div>
                 )
             }

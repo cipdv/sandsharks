@@ -42,6 +42,10 @@ const userSchema = mongoose.Schema({
     waiverAndCodeSignature: {
         type: String,
         required: true
+    },
+    gotItVballExperience: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

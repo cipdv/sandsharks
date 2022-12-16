@@ -12,6 +12,10 @@ const PostMessage = () => {
     const [endTime, setEndTime] = useState('')
     const [date, setDate] = useState('')
     const [message, setMessage] = useState('')
+    const [beginnerClinicOffered, setBeginnerClinicOffered] = useState(false)
+    const [beginnerClinicStartTime, setBeginnerClinicStartTime] = useState('')
+    const [beginnerClinicEndTime, setBeginnerClinicEndTime] = useState('')
+    const [seekingReplies, setSeekingReplies] = useState(false)
 
     const [errors, setErrors] = useState({})
 
@@ -20,7 +24,13 @@ const PostMessage = () => {
         startTime,
         endTime,
         date,
-        message
+        message,
+        beginnerClinic: {
+            beginnerClinicOffered,
+            beginnerClinicStartTime,
+            beginnerClinicEndTime,
+        },
+        seekingReplies
     }
 
     const clearStates = () => {
@@ -30,11 +40,18 @@ const PostMessage = () => {
         setDate('')
         setMessage('')
         setErrors('')
+        setSeekingReplies(false)
+        setBeginnerClinicEndTime(false)
+        setBeginnerClinicStartTime('')
+        setBeginnerClinicEndTime('')
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(submitPost(formData, setErrors))
+        if(beginnerClinicOffered) {
+            //dispatch submit beginner clinic
+        }
         clearStates()
     }
 
@@ -64,6 +81,26 @@ const PostMessage = () => {
                         <label>Post a new message to the group</label>
                         <textarea placeholder='send a fun message to the group' value={message} onChange={e=>setMessage(e.target.value)} />
                         {errors.message && <p className='error-msg'>{errors.message}</p>}
+                    </div>
+                    <div>
+                        <label>Beginner clinic offered?</label>
+                        <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>setBeginnerClinicOffered(e.target.checked)} />
+                    </div>
+                    {beginnerClinicOffered ? (
+                        <div>
+                            <div>
+                                <label>Clinic start time</label>
+                                <input type='time' value={beginnerClinicStartTime} onChange={e=>setBeginnerClinicStartTime(e.target.value)} />
+                            </div>
+                            <div>
+                                <label>Clinic end time</label>
+                                <input type='time' value={beginnerClinicEndTime} onChange={e=>setBeginnerClinicEndTime(e.target.value)} />
+                            </div>
+                        </div>
+                    ) : (<></>)}
+                    <div>
+                        <label>Seeking replies?</label>
+                        <input type='checkbox' checked={seekingReplies} onChange={e=>setSeekingReplies(e.target.checked)} />
                     </div>
                     <button className='btn' type='submit'>Post Message</button>
                 </form>

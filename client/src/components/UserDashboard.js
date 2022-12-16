@@ -1,14 +1,24 @@
 import React from 'react'
+import BeginnerClinicPost from './BeginnerClinicPost'
 import Posts from './Posts'
+import VballExperience from './VballExperience'
 
 const UserDashboard = ({user}) => {
 
     return (
         <div>
-            <h3>Welcome {user.preferredName}</h3>
-            <Posts user={user}/>
+            <h3>Hi {user.preferredName}!</h3>
+            <VballExperience user={user} />
+            {user.vballExperience !== 'novballexperience' ? (
+                <>
+                    <Posts user={user}/>
+                    <BeginnerClinicPost user={user} />
+                </>
+            ) : (
+                <BeginnerClinicPost user={user}/>           
+            )}
             <div>
-                -update/delete account/profile
+                -delete profile
             </div>
             <div>
                 -contact Sandsharks organization

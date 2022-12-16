@@ -2,7 +2,8 @@
 import * as api from '../api'
 
 //constants
-import { AUTH, SHOW_LOADER, HIDE_LOADER } from '../constants/userConstants'
+import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE } from '../constants/userConstants'
+import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 //register a new user
 export const register = (formData, setErrors, navigate) => async (dispatch) => {    
@@ -47,3 +48,37 @@ export const login = (formData, setErrors, navigate) => async (dispatch) => {
         dispatch({ type: HIDE_LOADER })
     }
 }
+
+//update a user profile
+export const updateProfile = (formData, setErrors, navigate, userId) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+    
+    try {
+        const {data} = await api.updateProfile(formData, userId)
+        if (data) {
+            dispatch({ type: UPDATE_PROFILE, data})
+            navigate('/')
+        } else {
+            setErrors({message: 'Your profile was not updated, try again'})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+
+    dispatch({ type: HIDE_LOADING_SCREEN})
+}
+
+//delete a user profile
+// export const deleteProfile = (userId, navigate) => async (dispatch) => {
+//     dispatch({ type: SHOW_LOADING_SCREEN})
+
+//     try {
+//         await api.deleteProfile(userId)
+//         navigate('/')
+//     } catch (error) {
+//         setErrors({message: error.response.data.message})
+//     }
+
+//     dispatch({ type: HIDE_LOADING_SCREEN})
+// }
+

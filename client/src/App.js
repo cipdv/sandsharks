@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import Header from './components/Header';
+import UpdateProfileScreen from './screens/UpdateProfileScreen';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/login' element={user ? <DashboardScreen /> : <LoginScreen />} />
         <Route path='/register' element={user ? <DashboardScreen /> : <RegisterScreen />} />
         <Route path='/dashboard' element={user ? <DashboardScreen /> : <LoginScreen />} />
+        <Route path='/updateprofile' element={user ? <UpdateProfileScreen /> : <LoginScreen />} />
       </Routes>
     </Router>
   );

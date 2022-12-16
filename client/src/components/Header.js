@@ -22,7 +22,14 @@ const Header = ({user}) => {
             </div>
             <div>
                 {user ? (
+                    <div>
+                    <div>
+                        <Link to='/updateprofile'>
+                            Update Profile
+                        </Link>
+                    </div>
                     <div onClick={handleLogout}>Logout</div>
+                    </div>
                 ) :(
                     <Link to='/login'>Login</Link>
                 )

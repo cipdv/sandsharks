@@ -41,6 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
             email: user.email,
             adminStatus: user.adminStatus,
             wantsEmailNotifications: user.wantsEmailNotifications,
+            gotItVballExperience: user.gotItVballExperience,
             token: generateToken(user._id)
         })
     } catch (error) {
@@ -72,6 +73,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 email: user.email,
                 adminStatus: user.adminStatus,
                 wantsEmailNotifications: user.wantsEmailNotifications,
+                gotItVballExperience: user.gotItVballExperience,
                 token: generateToken(user._id)
             })
         } else {
@@ -102,6 +104,7 @@ const updateProfile = asyncHandler(async (req, res) => {
                 email: user.email,
                 adminStatus: user.adminStatus,
                 wantsEmailNotifications: user.wantsEmailNotifications,
+                gotItVballExperience: user.gotItVballExperience,
                 token: generateToken(user._id)
             })
         } else {
@@ -112,5 +115,6 @@ const updateProfile = asyncHandler(async (req, res) => {
     }
 
 })
+
 
 export { registerUser, loginUser, updateProfile }
