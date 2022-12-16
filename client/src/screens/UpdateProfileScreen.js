@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 //actions
 import { updateProfile } from '../actions/userActions'
 
@@ -85,6 +86,9 @@ const UpdateProfileScreen = () => {
                 </div>
                 <button type="submit" className='btn'>Update</button>
             </form>
+            <div>
+                <Link to='/deleteprofile'>Delete my profile</Link>
+            </div>
         </div>
     )
 }

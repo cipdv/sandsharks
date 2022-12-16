@@ -1,6 +1,6 @@
-//auth
 export const AUTH = 'AUTH'
 export const SHOW_LOADER = 'SHOW_LOADER'
 export const HIDE_LOADER = 'HIDE_LOADER'
 export const LOGOUT = 'LOGOUT'
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
+export const DELETE_PROFILE = 'DELETE_PROFILE'

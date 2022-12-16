@@ -48,9 +48,11 @@ const Posts = ({user}) => {
         startTime,
         endTime,
         date,
-        beginnerClinicOffered,
-        beginnerClinicStartTime,
-        beginnerClinicEndTime,
+        beginnerClinic: {
+            beginnerClinicOffered,
+            beginnerClinicStartTime,
+            beginnerClinicEndTime,
+        },
         seekingReplies
     }
 

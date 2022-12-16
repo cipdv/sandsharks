@@ -87,6 +87,9 @@ const loginUser = asyncHandler(async (req, res) => {
     
 })
 
+//desc: update a user profile
+//route: PUT /api/users/updateprofile/:id
+//access: private
 const updateProfile = asyncHandler(async (req, res) => {
     const userId = req.params.id
     
@@ -116,5 +119,31 @@ const updateProfile = asyncHandler(async (req, res) => {
 
 })
 
+//desc: user deletes their own profile
+//route: DELETE /api/users/deleteprofile
+//access: private
+const deleteProfile = asyncHandler(async (req, res) => {
+    const {email, password} = req.body
 
-export { registerUser, loginUser, updateProfile }
+    console.log(req.body)
+    
+    try {
+        //find the user
+        const user = await User.findOne({email})
+        if (!user) {
+            return res.status(400).json({message: 'Profile not found, check email spelling'})
+        }
+        //if password matches delete the user
+        if(user && (await user.matchPassword(password))) {
+            user.remove()
+            res.status(201).json({message: 'Profile deleted'})
+        } else {
+            return res.status(400).json({message: 'Password is incorrect'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+export { registerUser, loginUser, updateProfile, deleteProfile }

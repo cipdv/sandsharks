@@ -52,7 +52,7 @@ const BeginnerClinicPost = ({user}) => {
         }
     }
 
-    if (latestPost && latestPost.beginnerClinic[0].beginnerClinicOffered) {
+    if (latestPost && latestPost.beginnerClinic[0].beginnerClinicOffered.beginnerClinicStartTime) {
         return (
             <div className='post'>
                 <h3>Beginner Clinic</h3>
@@ -76,9 +76,9 @@ const BeginnerClinicPost = ({user}) => {
                     ) : (<></>)
                 }
                 <div>
-                    <button className='btn' onClick={submitYes}>Yasss, I'll be there</button>
-                    <button className='btn' onClick={submitMaybe}>Slay, I might come</button>
-                    <button className='btn' onClick={submitNo}>I can't make it (aka I have brunch plans)</button>
+                    <button className='btn' onClick={submitYes}>Count me in!</button>
+                    <button className='btn' onClick={submitMaybe}>I'm a maybe</button>
+                    <button className='btn' onClick={submitNo}>I won't be there</button>
                     {errors.message && <p className='error-msg'>{errors.message}</p>}
                 </div>          
             </div>
@@ -88,7 +88,7 @@ const BeginnerClinicPost = ({user}) => {
         return (
             <>
                 {user.vballExperience === 'novballexperience' ? (
-                    <div>
+                    <div className='post'>
                         Updates for beginner clinics will show up here when they're running. Keep checking back for updates.
                     </div>
                 ) : (<></>)}

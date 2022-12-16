@@ -2,7 +2,7 @@
 import * as api from '../api'
 
 //constants
-import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE } from '../constants/userConstants'
+import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE } from '../constants/userConstants'
 import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 //register a new user
@@ -68,17 +68,23 @@ export const updateProfile = (formData, setErrors, navigate, userId) => async (d
     dispatch({ type: HIDE_LOADING_SCREEN})
 }
 
-//delete a user profile
-// export const deleteProfile = (userId, navigate) => async (dispatch) => {
-//     dispatch({ type: SHOW_LOADING_SCREEN})
+// user deletes their own profile
+export const deleteProfile = (formData, setErrors, navigate) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
 
-//     try {
-//         await api.deleteProfile(userId)
-//         navigate('/')
-//     } catch (error) {
-//         setErrors({message: error.response.data.message})
-//     }
+    try {
+        const {data} = await api.deleteProfile(formData)
+        if(data.message === 'Profile deleted') {
+            dispatch({ type: DELETE_PROFILE})
+            window.alert('Your profile was deleted')
+            navigate('/')
+        } else {
+            setErrors({message: 'Something went wrong, try again'})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
 
-//     dispatch({ type: HIDE_LOADING_SCREEN})
-// }
+    dispatch({ type: HIDE_LOADING_SCREEN})
+}
 
