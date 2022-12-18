@@ -107,6 +107,15 @@ const Posts = ({user}) => {
         }
     }
 
+    const clinciReplies = (rep) => {
+        if(latestPost.beginnerClinic[0]) {
+            const numOfYes = latestPost.beginnerClinic[0].replies.filter(r => r.reply === rep).length
+            return (
+                <>{numOfYes}</>
+            )
+        }
+    }
+
     return (
         <div className='post'>  
             {
@@ -170,22 +179,6 @@ const Posts = ({user}) => {
                             }
                         </div>
                         <div>
-                            <label>Beginner clinic offered?</label>
-                            <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>setBeginnerClinicOffered(e.target.checked)} />
-                        </div>
-                        {beginnerClinicOffered ? (
-                            <div>
-                                <div>
-                                    <label>Clinic start time</label>
-                                    <input type='time' value={beginnerClinicStartTime} onChange={e=>setBeginnerClinicStartTime(e.target.value)} />
-                                </div>
-                                <div>
-                                    <label>Clinic end time</label>
-                                    <input type='time' value={beginnerClinicEndTime} onChange={e=>setBeginnerClinicEndTime(e.target.value)} />
-                                </div>
-                            </div>
-                        ) : (<></>)}
-                        <div>
                             <label>Seeking replies?</label>
                             <input type='checkbox' checked={seekingReplies} onChange={e=>setSeekingReplies(e.target.checked)} />
                         </div>
@@ -200,6 +193,59 @@ const Posts = ({user}) => {
                                 <></>
                             )
                         }
+                        <div>
+                            <h3>Beginner Clinic</h3>
+                            <label>Beginner clinic offered?</label>
+                            <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>setBeginnerClinicOffered(e.target.checked)} />
+                        </div>
+                        {beginnerClinicOffered ? (
+                            <div>
+                                <div>
+                                    <label>Clinic start time</label>
+                                    <input type='time' value={beginnerClinicStartTime} onChange={e=>setBeginnerClinicStartTime(e.target.value)} />
+                                </div>
+                                <div>
+                                    <label>Clinic end time</label>
+                                    <input type='time' value={beginnerClinicEndTime} onChange={e=>setBeginnerClinicEndTime(e.target.value)} />
+                                </div>
+                                <div>
+                                    <h4>Who's coming:</h4>
+                                    <h5>Yes: {clinciReplies('yes')}</h5>
+                                    {
+                                        latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
+                                            if(reply.reply === 'yes') {
+                                                return <p id={reply._id}>{reply.name}</p>
+                                            } 
+                                            else {
+                                                return <></>
+                                            }
+                                        })
+                                    }
+                                    <h5>Maybe: {clinciReplies('maybe')}</h5>
+                                    {
+                                        latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
+                                            if(reply.reply === 'maybe') {
+                                                return <p id={reply._id}>{reply.name}</p>
+                                            } 
+                                            else {
+                                                return <></>
+                                            }
+                                        })
+                                    }
+                                    <h5>No: {clinciReplies('no')}</h5>
+                                    {
+                                        latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
+                                            if(reply.reply === 'no') {
+                                                return <p id={reply._id}>{reply.name}</p>
+                                            } 
+                                            else {
+                                                return <></>
+                                            }
+                                        })
+                                    }
+                                </div>
+                            </div>                          
+                        ) : (<></>)}                     
                         <div>
                             <button className='btn-pink' onClick={()=> handleUpdatePost(latestPost._id)}>Update post</button>
                             <button className='btn-pink' onClick={() => handleDeletePost(latestPost._id)}>Delete post</button>
@@ -247,8 +293,7 @@ const Posts = ({user}) => {
                                             </div>
                                         ) : (<></>)
                                     }
-                                </div>
-                                
+                                </div>                               
                                 {
                                     latestPost && latestPost.seekingReplies ? (
                                         <div>

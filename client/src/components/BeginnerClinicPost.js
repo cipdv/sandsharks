@@ -52,7 +52,7 @@ const BeginnerClinicPost = ({user}) => {
         }
     }
 
-    if (latestPost && latestPost.beginnerClinic[0].beginnerClinicOffered.beginnerClinicStartTime) {
+    if (latestPost && latestPost.beginnerClinic[0].beginnerClinicOffered) {
         return (
             <div className='post'>
                 <h3>Beginner Clinic</h3>
