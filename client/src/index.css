@@ -124,6 +124,21 @@ label {
   margin-right: 1rem;
 }
 
+table {
+  width: 100%
+}
+
+th, td {
+  text-align: left;
+  border-bottom:#5c7a5c 1px solid;
+  margin: 0;
+}
+
+tbody tr:hover{
+  background-color: #5c7a5c;
+  cursor: pointer;
+}
+
 .btn {
   background-color: #5c7a5c;
   border: none;

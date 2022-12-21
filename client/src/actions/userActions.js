@@ -2,7 +2,7 @@
 import * as api from '../api'
 
 //constants
-import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE } from '../constants/userConstants'
+import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS } from '../constants/userConstants'
 import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 //register a new user
@@ -88,3 +88,18 @@ export const deleteProfile = (formData, setErrors, navigate, userId) => async (d
     dispatch({ type: HIDE_LOADING_SCREEN})
 }
 
+//get all users
+export const getAllUsers = (setErrors) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+
+    try {
+        const {data} = await api.getAllUsers()
+        if(data) {
+            dispatch({ type: GET_ALL_USERS, data})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+
+    dispatch({ type: HIDE_LOADING_SCREEN})
+}

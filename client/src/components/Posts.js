@@ -56,6 +56,18 @@ const Posts = ({user}) => {
         seekingReplies
     }
 
+    const clear = () => {
+        setPostTitle('')
+        setMessage('')
+        setStartTime('')
+        setEndTime('')
+        setDate('')
+        setSeekingReplies(false)
+        setBeginnerClinicOffered(false)
+        setBeginnerClinicStartTime('')
+        setBeginnerClinicEndTime('')
+    }
+
     const submitYes = async (e) => {
         e.preventDefault()
         setErrors({})
@@ -89,12 +101,14 @@ const Posts = ({user}) => {
     const handleUpdatePost = (e) => {
         if(latestPost && window.confirm('Are you sure you want to update this post?')) {
             dispatch(updatePost(formData, latestPost._id, setErrors))
-        }
+        } 
     }
 
     const handleDeletePost = (postId) => {
         if(latestPost && window.confirm('Are you sure you want to delete this post?')) {
             dispatch(deletePost(postId, setErrors))
+            clear()
+            
         }
     }
 
@@ -108,7 +122,7 @@ const Posts = ({user}) => {
     }
 
     const clinciReplies = (rep) => {
-        if(latestPost.beginnerClinic[0]) {
+        if(latestPost && latestPost.beginnerClinic[0]) {
             const numOfYes = latestPost.beginnerClinic[0].replies.filter(r => r.reply === rep).length
             return (
                 <>{numOfYes}</>
@@ -122,6 +136,7 @@ const Posts = ({user}) => {
                 user.adminStatus === 'yes' ? (
                     <div>
                         <h4>Latest Posts</h4>
+                        {errors.message && <p className='error-msg'>{errors.message}</p>}
                         <div>
                             <label>Post title:</label>
                             <input type='text' value={postTitle} onChange={e=>setPostTitle(e.target.value)} />
@@ -180,7 +195,7 @@ const Posts = ({user}) => {
                         </div>
                         <div>
                             <label>Seeking replies?</label>
-                            <input type='checkbox' checked={seekingReplies} onChange={e=>setSeekingReplies(e.target.checked)} />
+                            <input type='checkbox' checked={seekingReplies} onChange={e=>latestPost && setSeekingReplies(e.target.checked)} />
                         </div>
                         {
                             latestPost && latestPost.seekingReplies ? (
@@ -196,7 +211,7 @@ const Posts = ({user}) => {
                         <div>
                             <h3>Beginner Clinic</h3>
                             <label>Beginner clinic offered?</label>
-                            <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>setBeginnerClinicOffered(e.target.checked)} />
+                            <input type='checkbox' checked={beginnerClinicOffered} onChange={e=>latestPost && setBeginnerClinicOffered(e.target.checked)} />
                         </div>
                         {beginnerClinicOffered ? (
                             <div>
@@ -247,8 +262,8 @@ const Posts = ({user}) => {
                             </div>                          
                         ) : (<></>)}                     
                         <div>
-                            <button className='btn-pink' onClick={()=> handleUpdatePost(latestPost._id)}>Update post</button>
-                            <button className='btn-pink' onClick={() => handleDeletePost(latestPost._id)}>Delete post</button>
+                            <button className='btn-pink' onClick={()=> latestPost && handleUpdatePost(latestPost._id)}>Update post</button>
+                            <button className='btn-pink' onClick={() => latestPost && handleDeletePost(latestPost._id)}>Delete post</button>
                         </div>
                         {errors.message && <p className='error-msg'>{errors.message}</p>}
                     </div>

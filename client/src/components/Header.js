@@ -23,14 +23,21 @@ const Header = ({user}) => {
             <div>
                 {user ? (
                     <div>
-                    <div>
-                        <Link to='/updateprofile'>
-                            Update Profile
-                        </Link>
+                        <div>
+                            <Link to='/updateprofile'>
+                                Update Profile
+                            </Link>
+                        </div>
+                        <div onClick={handleLogout}>
+                            Logout
+                        </div>
+                        {user.adminStatus === 'yes' && (
+                            <Link to='/viewprofiles'>
+                                View Profiles
+                            </Link>
+                        )}
                     </div>
-                    <div onClick={handleLogout}>Logout</div>
-                    </div>
-                ) :(
+                ) : (
                     <Link to='/login'>Login</Link>
                 )
                 }

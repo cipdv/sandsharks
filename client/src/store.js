@@ -10,7 +10,7 @@ const userInfoFromStorage = localStorage.getItem('user') ? JSON.parse(localStora
 
 const reducers = { authReducer, loadingReducer, postReducer }
 const initialState = {
-    authReducer: { user: userInfoFromStorage},
+    authReducer: { user: userInfoFromStorage, users: []},
     loadingReducer: { loading: false },
     postReducer: { posts: [] }
 }

@@ -16,6 +16,7 @@ export const register = (formData) => API.post('/api/users/register', formData)
 export const login = (formData) => API.post(`/api/users/login`, formData)
 export const updateProfile = (formData, userId) => API.put(`/api/users/updateprofile/${userId}`, formData)
 export const deleteProfile = (formData, userId) => API.post(`api/users/deleteprofile/${userId}`, formData)
+export const getAllUsers = () => API.get('api/users')
 //Posts
 export const submitPost = (formData) => API.post(`/api/posts/`, formData)
 export const getAllPosts = () => API.get('/api/posts')

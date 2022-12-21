@@ -148,5 +148,21 @@ const deleteProfile = asyncHandler(async (req, res) => {
     }
 })
 
+//desc: get all user profiles
+//route: GET /api/users
+//access: private
+const getAllUsers = asyncHandler(async(req, res) => {
+    try {
+        const users = await User.find()
+        if (users) {
+            return res.status(201).json(users)
+        } else {
+            return res.status(400).json({message: 'Something went wrong, refresh page'})
+        }
+    } catch (error) {
+        
+    }
+})
 
-export { registerUser, loginUser, updateProfile, deleteProfile }
+
+export { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers}
