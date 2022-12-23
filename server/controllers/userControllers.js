@@ -164,5 +164,31 @@ const getAllUsers = asyncHandler(async(req, res) => {
     }
 })
 
+const adminUserUpdate = asyncHandler(async(req, res) => {
+    const userId = req.params.id
+    
+    try {
+        //find the user and update it
+        const user = await User.findByIdAndUpdate(userId, req.body, {new: true})
+        if (user) {
+            return res.status(200).json(user)
+        } else {
+            return res.status(400).json({message: 'Profile was not found'})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
 
-export { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers}
+const adminDeleteProfile = asyncHandler(async(req,res) => {
+    const userId = req.params.id
+
+    try {
+        await User.findByIdAndDelete(userId)
+        return res.status(200).json({message: 'User was deleted'})
+    } catch (error) {
+        return res.status(400).json({message: 'User not deleted'})
+    }
+})
+
+export { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers, adminUserUpdate, adminDeleteProfile}

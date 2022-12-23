@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../actions/userActions'
 import UserProfile from '../components/UserProfile'
+import TaylorQuip from '../images/TaylorQuip.jpg'
 
 const ViewProfilesScreen = () => {
 
@@ -13,8 +14,8 @@ const ViewProfilesScreen = () => {
   const users = useSelector(state => state.authReducer.users)
   
   useEffect(()=>{
-    dispatch(getAllUsers(setErrors))
-  }, [])
+      dispatch(getAllUsers(setErrors))
+  }, [users])
 
   const selectUser = async (userId, u) => {
     setProfile(u)
@@ -23,8 +24,21 @@ const ViewProfilesScreen = () => {
   return (
     <>
       <div className='post'>
+        <div>
+          <h3>User Profiles</h3>
+          {
+              users.map(user => (
+                <div className='profile' id={user._id} onClick={()=>selectUser(user._id, user)}>
+                  <img className='profile-circle' src={TaylorQuip} alt="profile" />
+                  <h4>{user.firstName} {user.preferredName !== user.firstName ? (`"${user.preferredName}" `) : (' ')}{user.lastName}</h4>
+                  <p>{user.pronouns}</p>
+                  
+                </div>
+              ))
+            }
+        </div>
         {errors.message && <p className='error-msg'>{errors.message}</p>}
-        <h3>User Profiles</h3>
+        {/* <h3>User Profiles</h3>
         <table>
           <thead>
             <tr>
@@ -50,7 +64,7 @@ const ViewProfilesScreen = () => {
               ))
             }
           </tbody>
-        </table>
+        </table> */}
       </div>
       {Object.keys(profile).length !== 0 ? (
         <UserProfile profile={profile} />

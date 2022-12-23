@@ -2,7 +2,7 @@
 import * as api from '../api'
 
 //constants
-import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS } from '../constants/userConstants'
+import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS, ADMIN_UPDATE_PROFILE } from '../constants/userConstants'
 import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 //register a new user
@@ -102,4 +102,38 @@ export const getAllUsers = (setErrors) => async (dispatch) => {
     }
 
     dispatch({ type: HIDE_LOADING_SCREEN})
+}
+
+//admin update a user profile
+export const adminUserUpdate = (formData, setErrors, userId) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+    
+    try {
+        const {data} = await api.adminUserUpdate(formData, userId)
+        if (data) {
+            dispatch({ type: ADMIN_UPDATE_PROFILE, data})
+            window.alert(`User's profile was updated`)
+        } else {
+            setErrors({message: 'Your profile was not updated, try again'})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+
+    dispatch({ type: HIDE_LOADING_SCREEN})
+}
+
+//admin delete a user profile
+export const adminDeleteProfile = (userId) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+
+    try {
+        const { data } = await api.adminDeleteProfile(userId)
+        window.alert(`User's profile was deleted`)
+        console.log(data)
+    } catch (error) {
+        
+    }
+
+    dispatch({type: HIDE_LOADING_SCREEN})
 }

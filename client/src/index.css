@@ -203,3 +203,23 @@ tbody tr:hover{
 .latest-post {
   background-color: #bccfbc;
 }
+
+.profile {
+  padding: 1rem;
+}
+
+.profile:hover {
+  border-radius: 0.5rem;
+  background-color: #5c7a5c;
+}
+
+.profile-circle {
+  border: none;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+
+.profile-circle:hover {
+  cursor: pointer;
+}
