@@ -1,4 +1,4 @@
-import { AUTH, SHOW_LOADER, HIDE_LOADER, LOGOUT, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS, ADMIN_UPDATE_PROFILE } from "../constants/userConstants"
+import { AUTH, SHOW_LOADER, HIDE_LOADER, LOGOUT, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS, ADMIN_UPDATE_PROFILE, SEARCH_USERS } from "../constants/userConstants"
 
 //authorize a user
 export const authReducer = (state = { user: null, users: [], loading: false }, action) => {
@@ -20,6 +20,8 @@ export const authReducer = (state = { user: null, users: [], loading: false }, a
             return { ...state, users: [...state.users, action.data]}
         case GET_ALL_USERS:
             return { ...state, users: action.data}
+        case SEARCH_USERS:
+            return { ...state, users: action.payload}
         case SHOW_LOADER:
             return { ...state, loading: true }
         case HIDE_LOADER:

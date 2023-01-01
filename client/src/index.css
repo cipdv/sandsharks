@@ -211,6 +211,7 @@ tbody tr:hover{
 .profile:hover {
   border-radius: 0.5rem;
   background-color: #5c7a5c;
+  cursor: pointer;
 }
 
 .profile-circle {

@@ -5,6 +5,9 @@ const HomeScreen = () => {
 
     return (
         <>
+            <div>
+                next steps: search bar for user profiles and filters like vball experience, users can upload photo that needs admin approval, create super admin role who can approve new admins, pagination for posts/view profiles, waiver/code of conduct, sendgrid for email notifications, 
+            </div>
             <h2>Welcome to Sandsharks</h2>
             <p>Toronto SandSharks is a beach volleyball league for LGBTQ+ folks and allies.</p>
             <div>

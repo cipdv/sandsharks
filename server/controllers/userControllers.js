@@ -191,4 +191,20 @@ const adminDeleteProfile = asyncHandler(async(req,res) => {
     }
 })
 
-export { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers, adminUserUpdate, adminDeleteProfile}
+const searchUsers = asyncHandler(async(req, res) => {
+    const { searchQuery } = req.query
+
+    try {
+        const name = new RegExp(searchQuery, 'i')
+        const users = await User.find({ $or: [{firstName: name}, {lastName: name}, {email: name}] })
+        if (users?.length === 0) {
+          return res.status(401).json({message: 'No users found'})
+        } else {
+          return res.status(200).json(users)
+        }
+      } catch (error) {
+        res.status(404).json(error.message)
+      }
+})
+
+export { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers, adminUserUpdate, adminDeleteProfile, searchUsers }

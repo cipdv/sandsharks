@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../actions/userActions'
+import SearchBar from '../components/SearchBar'
 import UserProfile from '../components/UserProfile'
 import TaylorQuip from '../images/TaylorQuip.jpg'
 
@@ -15,9 +16,9 @@ const ViewProfilesScreen = () => {
   
   useEffect(()=>{
       dispatch(getAllUsers(setErrors))
-  }, [users])
+  }, [])
 
-  const selectUser = async (userId, u) => {
+  const selectUser = async (u) => {
     setProfile(u)
   }
 
@@ -26,9 +27,10 @@ const ViewProfilesScreen = () => {
       <div className='post'>
         <div>
           <h3>User Profiles</h3>
+          <SearchBar />
           {
               users.map(user => (
-                <div className='profile' id={user._id} onClick={()=>selectUser(user._id, user)}>
+                <div className='profile' id={user._id} onClick={()=>selectUser(user)}>
                   <img className='profile-circle' src={TaylorQuip} alt="profile" />
                   <h4>{user.firstName} {user.preferredName !== user.firstName ? (`"${user.preferredName}" `) : (' ')}{user.lastName}</h4>
                   <p>{user.pronouns}</p>

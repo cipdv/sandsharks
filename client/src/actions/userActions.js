@@ -2,7 +2,7 @@
 import * as api from '../api'
 
 //constants
-import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS, ADMIN_UPDATE_PROFILE } from '../constants/userConstants'
+import { AUTH, SHOW_LOADER, HIDE_LOADER, UPDATE_PROFILE, DELETE_PROFILE, GET_ALL_USERS, ADMIN_UPDATE_PROFILE, SEARCH_USERS } from '../constants/userConstants'
 import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 //register a new user
@@ -129,11 +129,34 @@ export const adminDeleteProfile = (userId) => async (dispatch) => {
 
     try {
         const { data } = await api.adminDeleteProfile(userId)
-        window.alert(`User's profile was deleted`)
-        console.log(data)
+            if(data.message === 'User was deleted') {
+            window.alert(`User's profile was deleted`)
+        } else {
+            window.alert('User was not deleted, try again')
+        }
     } catch (error) {
         
     }
 
     dispatch({type: HIDE_LOADING_SCREEN})
+}
+
+//search for user by name
+export const searchUsers = (searchQuery, setErrors) => async (dispatch) => {
+    dispatch({ type: SHOW_LOADING_SCREEN})
+
+    const {searchName} = searchQuery
+
+    try {
+        const { data } = await api.searchUsers(searchName)
+        if (data) {
+            dispatch({ type: SEARCH_USERS, payload: data})
+        } else {
+            setErrors({message: 'Something went wrong, try again'})
+        }
+    } catch (error) {
+        setErrors({message: error.response.data.message})
+    }
+
+    dispatch({ type: HIDE_LOADING_SCREEN})
 }

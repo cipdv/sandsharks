@@ -1,7 +1,7 @@
 import express from "express"
 
 //controllers
-import { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers, adminUserUpdate, adminDeleteProfile } from "../controllers/userControllers.js"
+import { registerUser, loginUser, updateProfile, deleteProfile, getAllUsers, adminUserUpdate, adminDeleteProfile, searchUsers } from "../controllers/userControllers.js"
 //middleware
 import { protect, admin } from "../middleware/authMiddleware.js"
 
@@ -14,5 +14,6 @@ router.route('/deleteprofile/:id').post(protect, deleteProfile)
 router.route('/').get(protect, getAllUsers)
 router.route('/admin/updateuserprofile/:id').put(protect, admin, adminUserUpdate)
 router.route('/admin/deleteuserprofile/:id').delete(protect, admin, adminDeleteProfile)
+router.route('/search').get(protect, admin, searchUsers)
 
 export default router

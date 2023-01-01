@@ -28,14 +28,15 @@ const Header = ({user}) => {
                                 Update Profile
                             </Link>
                         </div>
-                        <div onClick={handleLogout}>
-                            Logout
-                        </div>
+                        
                         {user.adminStatus === 'yes' && (
                             <Link to='/viewprofiles'>
                                 View Profiles
                             </Link>
                         )}
+                        <div onClick={handleLogout}>
+                            <button className='btn'>Logout</button>
+                        </div>
                     </div>
                 ) : (
                     <Link to='/login'>Login</Link>

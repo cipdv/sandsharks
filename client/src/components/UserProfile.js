@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { adminDeleteProfile, adminUserUpdate } from '../actions/userActions'
 
 const UserProfile = ({profile}) => {
@@ -35,17 +34,16 @@ const UserProfile = ({profile}) => {
   return (
     <>
         <div className='post'>
-            <h4>{firstName} {lastName}</h4>
-            <p>Goes by {preferredName}</p>
+            <h4>{firstName} {preferredName !== firstName ? (`"${preferredName}" `) : (' ')}{lastName}</h4>
             <p>{pronouns}</p>
             <p>{email}</p>
             <div>
                 <label>Volleyball Experience</label>
                 <select value={vballXPState} onChange={e=>setVballXPState(e.target.value)}>
-                    <option value='2v2experience'>I have played 2v2 beach volleyball</option>
-                    <option value='indoorexperienceonly'>I haven't played beach volleyball, but I have played indoor volleyball</option>
-                    <option value='no2v2experience'>I have played 4v4 or 6v6 beach volleyball</option>
-                    <option value='novballexperience'>I have never played any beach or indoor volleyball</option>
+                    <option value='2v2experience'>Has 2v2 beach experience</option>
+                    <option value='indoorexperienceonly'>Has only played indoor volleyball</option>
+                    <option value='no2v2experience'>Has played 4v4 or 6v6 beach volleyball</option>
+                    <option value='novballexperience'>Has never played any beach or indoor volleyball</option>
                 </select>
             </div>
             <div>
