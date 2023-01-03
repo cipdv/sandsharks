@@ -224,3 +224,20 @@ tbody tr:hover{
 .profile-circle:hover {
   cursor: pointer;
 }
+
+.search-bar {
+  background-color: #5c7a5c;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.search-bar button {
+  background-color:#8fbc8f;
+}
+
+.search-bar button:hover {
+  background-color:#6a8d6a;
+}

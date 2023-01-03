@@ -145,15 +145,36 @@ export const adminDeleteProfile = (userId) => async (dispatch) => {
 export const searchUsers = (searchQuery, setErrors) => async (dispatch) => {
     dispatch({ type: SHOW_LOADING_SCREEN})
 
-    const {searchName} = searchQuery
+    const {searchName, volleyballExperience, adminStatus} = searchQuery
 
     try {
-        const { data } = await api.searchUsers(searchName)
-        if (data) {
-            dispatch({ type: SEARCH_USERS, payload: data})
-        } else {
-            setErrors({message: 'Something went wrong, try again'})
+        if(searchName) {
+            const { data } = await api.searchUsers(searchName)
+            if (data) {
+                dispatch({ type: SEARCH_USERS, payload: data})
+            } else {
+                setErrors({message: 'Something went wrong, try again'})
+            }
         }
+        
+        if(volleyballExperience) {
+            const { data } = await api.searchUsers(volleyballExperience)
+            if (data) {
+                dispatch({ type: SEARCH_USERS, payload: data})
+            } else {
+                setErrors({message: 'Something went wrong, try again'})
+            }
+        }
+
+        if(adminStatus) {
+            const { data } = await api.searchUsers(adminStatus)
+            if (data) {
+                dispatch({ type: SEARCH_USERS, payload: data})
+            } else {
+                setErrors({message: 'Something went wrong, try again'})
+            }
+        }
+        
     } catch (error) {
         setErrors({message: error.response.data.message})
     }

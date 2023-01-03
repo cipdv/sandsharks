@@ -196,7 +196,8 @@ const searchUsers = asyncHandler(async(req, res) => {
 
     try {
         const name = new RegExp(searchQuery, 'i')
-        const users = await User.find({ $or: [{firstName: name}, {lastName: name}, {email: name}] })
+        const users = await User.find({ $or: [{firstName: name}, {lastName: name}, {email: name}, {vballExperience: name}, {adminStatus: name}] })
+        
         if (users?.length === 0) {
           return res.status(401).json({message: 'No users found'})
         } else {
