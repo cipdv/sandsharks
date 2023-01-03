@@ -46,6 +46,13 @@ const userSchema = mongoose.Schema({
     gotItVballExperience: {
         type: Boolean,
         default: false
+    },
+    image: {
+        type: String
+    },
+    imageApproved: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

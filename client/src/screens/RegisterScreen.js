@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 //actions
 import { register } from '../actions/userActions'
+import { HIDE_LOADING_SCREEN, SHOW_LOADING_SCREEN } from '../constants/loadingConstants'
 
 const RegisterScreen = () => {
 
@@ -19,6 +21,7 @@ const RegisterScreen = () => {
     const [vballExperience, setVballExperience] = useState('')
     const [waiverAndCodeSignature, setWaiverAndCodeSignature] = useState(false)
     const [wantsEmailNotifications, setWantsEmailNotifications] = useState(false)
+    const [image, setImage] = useState('')
     
     //error handling
     const [errors, setErrors] = useState({})
@@ -34,12 +37,38 @@ const RegisterScreen = () => {
         password,
         vballExperience,
         waiverAndCodeSignature,
-        wantsEmailNotifications
+        wantsEmailNotifications,
+        image
     }
 
     const submitForm = (e) => {
         e.preventDefault()
         dispatch(register(formData, setErrors, navigate))
+    }
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append('image', file)
+        dispatch({ type: SHOW_LOADING_SCREEN})
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/api/upload', formData, config)
+            setImage(data)
+            dispatch({ type: HIDE_LOADING_SCREEN})
+        } catch (error) {
+            console.error(error)
+            dispatch({ type: HIDE_LOADING_SCREEN})
+        }
+        
+        console.log(file)
+
     }
 
     return (
@@ -97,6 +126,10 @@ const RegisterScreen = () => {
                 <div>
                     <label>I want to receive email updates for when Sandsharks is setting up to play</label>
                     <input type='checkbox' name='wantsEmailNotifications' checked={wantsEmailNotifications} onChange={e=>setWantsEmailNotifications(e.target.checked)}/>
+                </div>
+                <div>
+                    <label>Profile photo</label>
+                    <input type='file' id='image-file' label='Upload file' onChange={uploadFileHandler} />
                 </div>
                 <button type="submit" className='btn'>Register</button>
             </form>

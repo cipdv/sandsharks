@@ -92,6 +92,23 @@ input[type=email] {
   font-family: 'Courier New', Courier, monospace; 
 }
 
+input::file-selector-button {
+  color: white;
+  background-color: #5c7a5c;
+  border: solid 1px;
+  border-color: white;
+  padding: 0.4rem;
+}
+
+input::file-selector-button:hover {
+  cursor: pointer;
+  background-color: #8fbc8f;
+  border: solid 1px;
+  border-color: white;
+  padding: 0.4rem;
+}
+
+
 select { 
   margin-right: 1rem;
   margin-top: 1rem;
@@ -223,6 +240,19 @@ tbody tr:hover{
 
 .profile-circle:hover {
   cursor: pointer;
+}
+
+.profile-circle-large {
+  border: none;
+  border-radius: 50%;
+  width: 14rem;
+  height: 14rem;
+}
+
+.profile-circle-large:hover {
+  cursor: pointer;
+  width: 25rem;
+  height: 25rem;
 }
 
 .search-bar {

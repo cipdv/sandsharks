@@ -18,6 +18,7 @@ const UpdateProfileScreen = () => {
     const [email, setEmail] = useState('')
     const [pronouns, setPronouns] = useState('')
     const [wantsEmailNotifications, setWantsEmailNotifications] = useState(false)
+    const [image, setImage] = useState('')
     
     //error handling
     const [errors, setErrors] = useState({})
@@ -30,6 +31,7 @@ const UpdateProfileScreen = () => {
             setEmail(user.email)
             setPronouns(user.pronouns)
             setWantsEmailNotifications(user.wantsEmailNotifications)
+            setImage(user.image)
         }
     }, [user])
 
@@ -57,6 +59,9 @@ const UpdateProfileScreen = () => {
             <h3>Update Your Profile</h3>
             {errors.message && <p className='error-msg'>{errors.message}</p>}
             <form onSubmit={handleSubmit}>
+                <div>
+                    <img className='profile-circle' src={image} alt='profile-photo' />
+                </div>
                 <div>
                     <label>Full Name</label>
                     <input type='text' name='firstName' placeholder='First name' value={firstName} onChange={e=>setFirstName(e.target.value)} />

@@ -31,7 +31,7 @@ const ViewProfilesScreen = () => {
           {
               users.map(user => (
                 <div className='profile' id={user._id} onClick={()=>selectUser(user)}>
-                  <img className='profile-circle' src={TaylorQuip} alt="profile" />
+                  <img className='profile-circle' src={user.image} alt="profile" />
                   <h4>{user.firstName} {user.preferredName !== user.firstName ? (`"${user.preferredName}" `) : (' ')}{user.lastName}</h4>
                   <p>{user.pronouns}</p>
                   

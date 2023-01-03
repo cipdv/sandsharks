@@ -8,16 +8,18 @@ const UserProfile = ({profile}) => {
     //click their email to send an email 
     const dispatch = useDispatch()
 
-    const { firstName, lastName, pronouns, email, adminStatus, preferredName, vballExperience } = profile
+    const { firstName, lastName, pronouns, email, adminStatus, preferredName, vballExperience, image, imageApproved } = profile
 
     const [adminState, setAdminState] = useState('')
     const [vballXPState, setVballXPState] = useState('')
+    const [imgApprovedState, setImgApprovedState] = useState(false)
     const [errors, setErrors] = useState({})
 
     useEffect(()=>{
         if(profile) {
             setAdminState(adminStatus)
             setVballXPState(vballExperience)
+            setImgApprovedState(imageApproved)
         }
     }, [profile])
 
@@ -34,6 +36,12 @@ const UserProfile = ({profile}) => {
   return (
     <>
         <div className='post'>
+            
+                <img className='profile-circle-large' src={image} alt='profile-photo' />
+                <div>
+                <label>Image approved?</label>
+                <input type='checkbox' value={imgApprovedState} onChange={e=>setImgApprovedState(e.target.checked)} />
+            </div>
             <h4>{firstName} {preferredName !== firstName ? (`"${preferredName}" `) : (' ')}{lastName}</h4>
             <p>{pronouns}</p>
             <p>{email}</p>

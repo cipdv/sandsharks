@@ -7,7 +7,7 @@ import {registrationValidation} from '../utils/validate.js'
 //route: POST /api/users/register
 //access: public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature } = req.body
+    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature, image } = req.body
 
     try {
        //validation
@@ -24,6 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
             preferredName: preferredName ? preferredName : firstName,
             pronouns,
             email,
+            image,
             vballExperience,
             password,
             wantsEmailNotifications,
@@ -39,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
             pronouns: user.pronouns,
             vballExperience: user.vballExperience,
             email: user.email,
+            image: user.image,
             adminStatus: user.adminStatus,
             wantsEmailNotifications: user.wantsEmailNotifications,
             gotItVballExperience: user.gotItVballExperience,
