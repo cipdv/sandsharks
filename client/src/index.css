@@ -255,6 +255,18 @@ tbody tr:hover{
   height: 25rem;
 }
 
+.profile-circle-little {
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  /* margin-right: -0.8rem; */
+}
+
+.profile-circle-little:hover {
+  cursor: pointer;
+}
+
 .search-bar {
   background-color: #5c7a5c;
   border: none;

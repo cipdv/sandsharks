@@ -8,23 +8,23 @@ const UserProfile = ({profile}) => {
     //click their email to send an email 
     const dispatch = useDispatch()
 
-    const { firstName, lastName, pronouns, email, adminStatus, preferredName, vballExperience, image, imageApproved } = profile
+    const { firstName, lastName, pronouns, email, adminStatus, preferredName, vballExperience, image } = profile
 
     const [adminState, setAdminState] = useState('')
     const [vballXPState, setVballXPState] = useState('')
-    const [imgApprovedState, setImgApprovedState] = useState(false)
+    const [imgApprovedState, setImgApprovedState] = useState('')
     const [errors, setErrors] = useState({})
 
     useEffect(()=>{
         if(profile) {
             setAdminState(adminStatus)
             setVballXPState(vballExperience)
-            setImgApprovedState(imageApproved)
+            setImgApprovedState(image ? (image.status) : (''))
         }
     }, [profile])
 
     const handleProfileUpdate = () => {
-        dispatch(adminUserUpdate({adminStatus: adminState, vballExperience: vballXPState}, setErrors, profile._id))
+        dispatch(adminUserUpdate({adminStatus: adminState, vballExperience: vballXPState, status: imgApprovedState}, setErrors, profile._id))
     }
 
     const handleDeleteProfile = () => {
@@ -37,10 +37,15 @@ const UserProfile = ({profile}) => {
     <>
         <div className='post'>
             
-                <img className='profile-circle-large' src={image} alt='profile-photo' />
+                <img className='profile-circle-large' src={image ? (image.image) : ('')} alt='profile-photo' />
                 <div>
                 <label>Image approved?</label>
-                <input type='checkbox' value={imgApprovedState} onChange={e=>setImgApprovedState(e.target.checked)} />
+                {/* <input type='checkbox' checked={imgApprovedState} onChange={e=>setImgApprovedState(e.target.checked)} /> */}
+                <select value={imgApprovedState} onChange={e=>setImgApprovedState(e.target.value)}>
+                    <option value='approved'>Approved</option>
+                    <option value='pending'>Pending</option>
+                    <option value='not approved'>Not approved</option>
+                </select>
             </div>
             <h4>{firstName} {preferredName !== firstName ? (`"${preferredName}" `) : (' ')}{lastName}</h4>
             <p>{pronouns}</p>

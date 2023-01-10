@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Sandsharks from '../images/SandSharks.jpg'
+ 
 //actions
 import { updateProfile } from '../actions/userActions'
 
@@ -60,7 +62,11 @@ const UpdateProfileScreen = () => {
             {errors.message && <p className='error-msg'>{errors.message}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <img className='profile-circle' src={image} alt='profile-photo' />
+                    {
+                        image.status === 'not approved' ? (<img className='profile-circle' src={Sandsharks} />) 
+                        : image.status === 'pending' ? (<><img className='profile-circle' src={image.image} /><label style={{color: 'red'}}>Image pending</label></>) 
+                        : (<img className='profile-circle' src={image.image} />)}
+                    {/* <img className='profile-circle' src={image.status !== 'approved' ? (Sandsharks) : (<div><h3>Image pending</h3>{image.image}</div>)} alt='profile-photo' /> */}
                 </div>
                 <div>
                     <label>Full Name</label>

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../actions/userActions'
 import SearchBar from '../components/SearchBar'
 import UserProfile from '../components/UserProfile'
-import TaylorQuip from '../images/TaylorQuip.jpg'
 
 const ViewProfilesScreen = () => {
 
@@ -31,7 +30,7 @@ const ViewProfilesScreen = () => {
           {
               users.map(user => (
                 <div className='profile' id={user._id} onClick={()=>selectUser(user)}>
-                  <img className='profile-circle' src={user.image} alt="profile" />
+                  <img className='profile-circle' src={user.image ? (user.image.image) : ('')} alt="profile photo" />
                   <h4>{user.firstName} {user.preferredName !== user.firstName ? (`"${user.preferredName}" `) : (' ')}{user.lastName}</h4>
                   <p>{user.pronouns}</p>
                   

@@ -7,7 +7,7 @@ const UserDashboard = ({user}) => {
 
     return (
         <div>
-            <h3>Hi {user.preferredName}!</h3>
+            <h3>Hi {user.preferredName}!</h3>   
             <VballExperience user={user} />
             {user.vballExperience !== 'novballexperience' ? (
                 <>

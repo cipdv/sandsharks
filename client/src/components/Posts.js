@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { replyToPost, deletePost, updatePost } from '../actions/postActions'
+import Sandsharks from '../images/SandSharks.jpg'
 
 const Posts = ({user}) => {
 
@@ -35,10 +36,11 @@ const Posts = ({user}) => {
         }
     }, [latestPost])
 
-    const data = {
+    const data = {  
         name: user.preferredName,
         email: user.email,
         userId: user._id,
+        image: user.image,
         reply: ''
     }
 
@@ -229,7 +231,7 @@ const Posts = ({user}) => {
                                     {
                                         latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
                                             if(reply.reply === 'yes') {
-                                                return <p id={reply._id}>{reply.name}</p>
+                                                return <p id={reply._id}>{reply.image}</p>
                                             } 
                                             else {
                                                 return <></>
@@ -240,7 +242,7 @@ const Posts = ({user}) => {
                                     {
                                         latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
                                             if(reply.reply === 'maybe') {
-                                                return <p id={reply._id}>{reply.name}</p>
+                                                return <p id={reply._id}>{reply.image}</p>
                                             } 
                                             else {
                                                 return <></>
@@ -251,7 +253,7 @@ const Posts = ({user}) => {
                                     {
                                         latestPost && latestPost.beginnerClinic[0].replies.map((reply)=>{
                                             if(reply.reply === 'no') {
-                                                return <p id={reply._id}>{reply.name}</p>
+                                                return <p id={reply._id}>{reply.image}</p>
                                             } 
                                             else {
                                                 return <></>
@@ -275,7 +277,7 @@ const Posts = ({user}) => {
                             </div>
                         ) : (
                             <div>
-                                <h4>{latestPost && latestPost.postTitle}</h4>
+                                <h2>{latestPost && latestPost.postTitle}</h2>
                                 <p>
                                     {latestPost && latestPost.message}
                                 </p>
@@ -297,7 +299,11 @@ const Posts = ({user}) => {
                                                 <h5>Who's coming:</h5>                                  
                                                 {latestPost.replies.map((reply)=>{
                                                     if(reply.reply === 'yes') {
-                                                        return <p id={reply._id}>{reply.name}</p>
+                                                        return (
+                                                            <>
+                                                                <img className='profile-circle-little' src={reply.image} alt={reply.name} />
+                                                            </>
+                                                        )
                                                     } else if (reply.reply === 'no' || 'maybe') {
                                                         return <p id={reply._id}></p>
                                                     } else {

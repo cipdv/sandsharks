@@ -66,9 +66,6 @@ const RegisterScreen = () => {
             console.error(error)
             dispatch({ type: HIDE_LOADING_SCREEN})
         }
-        
-        console.log(file)
-
     }
 
     return (

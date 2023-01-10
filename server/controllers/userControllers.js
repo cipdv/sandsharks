@@ -17,6 +17,8 @@ const registerUser = asyncHandler(async (req, res) => {
             return res.status(400).json({errs})
         }
 
+        //set image to Sandsharks logo if there is no image file uploaded
+        
         //proceed with registering user
         const user = await User.create({
             firstName,
@@ -24,7 +26,10 @@ const registerUser = asyncHandler(async (req, res) => {
             preferredName: preferredName ? preferredName : firstName,
             pronouns,
             email,
-            image,
+            image: {
+                image: image,
+                status: 'pending'
+            },
             vballExperience,
             password,
             wantsEmailNotifications,
@@ -76,7 +81,8 @@ const loginUser = asyncHandler(async (req, res) => {
                 adminStatus: user.adminStatus,
                 wantsEmailNotifications: user.wantsEmailNotifications,
                 gotItVballExperience: user.gotItVballExperience,
-                token: generateToken(user._id)
+                token: generateToken(user._id),
+                image: user.image
             })
         } else {
             return res.status(401).json({
@@ -168,10 +174,17 @@ const getAllUsers = asyncHandler(async(req, res) => {
 
 const adminUserUpdate = asyncHandler(async(req, res) => {
     const userId = req.params.id
+    const { adminStatus, vballExperience, status } = req.body
     
     try {
         //find the user and update it
-        const user = await User.findByIdAndUpdate(userId, req.body, {new: true})
+        const user = await User.findByIdAndUpdate(userId, {
+            $set: {
+                "adminStatus": adminStatus,
+                "vballExperience": vballExperience,
+                "image.status": status, 
+            }
+        }, {new: true})
         if (user) {
             return res.status(200).json(user)
         } else {

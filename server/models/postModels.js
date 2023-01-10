@@ -16,6 +16,9 @@ const postRepliesSchema = mongoose.Schema({
     reply: {
         type: String,
         required: true
+    },
+    image: {
+        type: String
     }
 })
 
@@ -35,6 +38,9 @@ const begClinicRepliesSchema = mongoose.Schema({
     reply: {
         type: String,
         required: true
+    },
+    image: {
+        type: String
     }
 })
 
