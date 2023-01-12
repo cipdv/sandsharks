@@ -7,7 +7,8 @@ import {registrationValidation} from '../utils/validate.js'
 //route: POST /api/users/register
 //access: public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature, image } = req.body
+    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature } = req.body
+    let { image } = req.body
 
     try {
        //validation
@@ -18,6 +19,9 @@ const registerUser = asyncHandler(async (req, res) => {
         }
 
         //set image to Sandsharks logo if there is no image file uploaded
+        if (image === "") {
+            image = '/uploads\\SandSharks.jpg'
+        }
         
         //proceed with registering user
         const user = await User.create({
@@ -110,6 +114,7 @@ const updateProfile = asyncHandler(async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 preferredName: user.preferredName,
+                image: user.image,
                 pronouns: user.pronouns,
                 vballExperience: user.vballExperience,
                 email: user.email,

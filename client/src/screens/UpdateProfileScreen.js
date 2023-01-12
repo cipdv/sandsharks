@@ -44,7 +44,8 @@ const UpdateProfileScreen = () => {
         preferredName,
         email,
         pronouns,
-        wantsEmailNotifications
+        wantsEmailNotifications,
+        image
     }
 
     const handleSubmit = (e) => {

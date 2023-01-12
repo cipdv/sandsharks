@@ -40,7 +40,7 @@ const Posts = ({user}) => {
         name: user.preferredName,
         email: user.email,
         userId: user._id,
-        image: user.image,
+        image: user.image.image,
         reply: ''
     }
 
@@ -73,8 +73,10 @@ const Posts = ({user}) => {
     const submitYes = async (e) => {
         e.preventDefault()
         setErrors({})
-        if(latestPost) {
+        if(latestPost && user.image.status === 'approved') {
             dispatch(replyToPost({...data, reply: 'yes'}, latestPost._id, setErrors))
+        } else if (latestPost && user.image.status !== 'approved') {
+            dispatch(replyToPost({...data, image: '/uploads\\SandSharks.jpg', reply: 'yes'}, latestPost._id, setErrors))
         } else {
             console.log('no post')
         }
@@ -162,10 +164,30 @@ const Posts = ({user}) => {
                         <div>
                             <h4>Who's coming:</h4>
                             <h5>Yes: {countReplies('yes')}</h5>
+                            {/* {latestPost.replies.map((reply)=>{
+                                                    if(reply.reply === 'yes') {
+                                                        return (
+                                                            <div>
+                                                                <img className='profile-circle-little' src={reply.image} alt={reply.name}/>
+                                                                <label>{reply.name}</label>
+                                                            </div>
+                                                        )
+                                                    } else if (reply.reply === 'no' || 'maybe') {
+                                                        return <p id={reply._id}></p>
+                                                    } else {
+                                                        return <p id={reply._id}>No one yet</p>
+                                                    }
+                                                })
+                                                } */}
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'yes') {
-                                        return <p id={reply._id}>{reply.name}</p>
+                                        return (
+                                            <div>
+                                                <img className='profile-circle-little' src={reply.image} alt={reply.name}/>
+                                                <label>{reply.name}</label>
+                                            </div>
+                                        )
                                     } 
                                     else {
                                         return <></>
@@ -176,7 +198,12 @@ const Posts = ({user}) => {
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'maybe') {
-                                        return <p id={reply._id}>{reply.name}</p>
+                                        return (
+                                            <div>
+                                                <img className='profile-circle-little' src={reply.image} alt={reply.name}/>
+                                                <label>{reply.name}</label>
+                                            </div>
+                                        )
                                     } 
                                     else {
                                         return <></>
@@ -187,7 +214,12 @@ const Posts = ({user}) => {
                             {
                                 latestPost && latestPost.replies.map((reply)=>{
                                     if(reply.reply === 'no') {
-                                        return <p id={reply._id}>{reply.name}</p>
+                                        return (
+                                            <div>
+                                                <img className='profile-circle-little' src={reply.image} alt={reply.name}/>
+                                                <label>{reply.name}</label>
+                                            </div>
+                                        )
                                     } 
                                     else {
                                         return <></>
@@ -300,9 +332,10 @@ const Posts = ({user}) => {
                                                 {latestPost.replies.map((reply)=>{
                                                     if(reply.reply === 'yes') {
                                                         return (
-                                                            <>
-                                                                <img className='profile-circle-little' src={reply.image} alt={reply.name} />
-                                                            </>
+                                                            <div>
+                                                                <img className='profile-circle-little' src={reply.image} alt={reply.name}/>
+                                                                <label>{reply.name}</label>
+                                                            </div>
                                                         )
                                                     } else if (reply.reply === 'no' || 'maybe') {
                                                         return <p id={reply._id}></p>

@@ -10,6 +10,8 @@ export const register = (formData, setErrors, navigate) => async (dispatch) => {
     
     dispatch({ type: SHOW_LOADER})
     
+    
+
     try {
         const { data } = await api.register(formData)
         

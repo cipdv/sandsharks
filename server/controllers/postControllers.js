@@ -27,6 +27,7 @@ const submitPost = asyncHandler(async (req, res) => {
 const getPosts = asyncHandler(async(req, res) => {
     try {
         const posts = await Post.find()
+
         if (posts) {
             return res.status(200).json(posts)
         } else {

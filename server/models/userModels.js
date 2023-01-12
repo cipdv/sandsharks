@@ -1,15 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from 'bcryptjs'
 
-const imageSchema = mongoose.Schema({
-    status: {
-        type: String
-    },
-    image: {
-        type: String
-    }
-})
-
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
