@@ -38,10 +38,6 @@ export async function registrationValidation (body) {
         errs.vballExperience = 'Please select your volleyball experience'         
     }
 
-    if(!waiverAndCodeSignature) {
-        errs.waiverAndCodeSignature = 'You must agree to the waiver and code of conduct to become a member'          
-    }
-    
     return errs
 }
 

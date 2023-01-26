@@ -23,10 +23,17 @@ const ViewProfilesScreen = () => {
 
   return (
     <>
-      <div className='post'>
+      <SearchBar />
+      <div>
+        {Object.keys(profile).length !== 0 ? (
+          <UserProfile profile={profile} />
+        ) : (<></>)}
+        </div>
+      <div className='post-side-by-side'>
+        
         <div>
           <h3>User Profiles</h3>
-          <SearchBar />
+          
           {
               users.map(user => (
                 <div className='profile' id={user._id} onClick={()=>selectUser(user)}>
@@ -67,9 +74,7 @@ const ViewProfilesScreen = () => {
           </tbody>
         </table> */}
       </div>
-      {Object.keys(profile).length !== 0 ? (
-        <UserProfile profile={profile} />
-      ) : (<></>)}
+      
     </>
   )
 }

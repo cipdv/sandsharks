@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../actions/postActions'
 import AdminDashboard from '../components/AdminDashboard'
 import UserDashboard from '../components/UserDashboard'
+import WaiverCoC from './WaiverCoC'
 
 const DashboardScreen = () => {
 
@@ -17,8 +18,10 @@ const DashboardScreen = () => {
     return (
         user.adminStatus === 'yes' ? (
             <AdminDashboard user={user}/>
-        ) : (
+        ) : user.waiverAndCoC ? (
             <UserDashboard user={user} />
+        ) : (
+            <WaiverCoC user={user}/>
         )
 
     )

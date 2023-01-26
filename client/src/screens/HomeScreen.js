@@ -1,15 +1,19 @@
 import React from 'react'
 import { Link } from'react-router-dom'
+import beachvolleyball from '../images/beachvolleyball.jpg'
 
 const HomeScreen = () => {
 
     return (
-        <>
+        <div className='container'>
             <div>
                 next steps: filters - user can update profile photo/super admin can approve or disapprove profile photo, able to do multiple filters at once, users can upload photo that needs admin approval, create super admin role who can approve new admins, pagination for posts/view profiles, waiver/code of conduct, sendgrid for email notifications, fix update profile to not add returned user to users reducer, how will upload folder get added when deploying?
             </div>
             <h2>Welcome to Sandsharks</h2>
             <p>Toronto SandSharks is a beach volleyball league for LGBTQ+ folks and allies.</p>
+            <div>
+                <img className='homescreen-pic' src={beachvolleyball} alt="beach volleyball" />
+            </div>
             <div>
                 <h3>Who is welcome to join?</h3>
                 <p>
@@ -36,13 +40,13 @@ const HomeScreen = () => {
             </div>
             <div>
                 <h3>How do I become a member?</h3>
-                It’s free to join and play, and you can play as many games as you’d like throughout the season. You’ll be asked to agree to a code of conduct and to sign a waiver to indemnify the league of any responsibility of injuries and lost possessions.
+                <p>It’s free to join and play, and you can play as many games as you’d like throughout the season. You’ll be asked to agree to a code of conduct and to sign a waiver to indemnify the league of any responsibility of injuries and lost possessions.</p>
                 <Link to='/register' className='link'><h4>Click here to become a member</h4></Link>
             </div>
             
             <Link to='/login' className='link'><h4>Member Login</h4></Link>
   
-        </>
+        </div>
     )
 }
 

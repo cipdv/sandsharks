@@ -19,7 +19,6 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [vballExperience, setVballExperience] = useState('')
-    const [waiverAndCodeSignature, setWaiverAndCodeSignature] = useState(false)
     const [wantsEmailNotifications, setWantsEmailNotifications] = useState(false)
     const [image, setImage] = useState('')
     
@@ -36,9 +35,9 @@ const RegisterScreen = () => {
         confirmPassword,
         password,
         vballExperience,
-        waiverAndCodeSignature,
         wantsEmailNotifications,
-        image
+        image,
+        waiverAndCoc: false
     }
 
     const submitForm = (e) => {
@@ -100,6 +99,8 @@ const RegisterScreen = () => {
                     <label>Password</label>
                     <input type='password' name='password' placeholder='Create a password' value={password} onChange={e=>setPassword(e.target.value)}/>
                     {errors.password && <p className='error-msg'>{errors.password}</p>}
+                </div>
+                <div>
                     <label>Confirm password</label>
                     <input type='password' name='confirmPassword' placeholder='Confirm your password' value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                     {errors.confirmPassword && <p className='error-msg'>{errors.confirmPassword}</p>}
@@ -114,11 +115,6 @@ const RegisterScreen = () => {
                         <option value='novballexperience'>I have never played any beach or indoor volleyball</option>
                     </select>
                     {errors.vballExperience && <p className='error-msg'>{errors.vballExperience}</p>}
-                </div>
-                <div>
-                    <label>I agree to the Waiver and Code of Conduct</label>
-                    <input type='checkbox' name='waiverAndCodeSignature' checked={waiverAndCodeSignature} onChange={e=>setWaiverAndCodeSignature(e.target.checked)}/>
-                    {errors.waiverAndCodeSignature && <p className='error-msg'>{errors.waiverAndCodeSignature}</p>}
                 </div>
                 <div>
                     <label>I want to receive email updates for when Sandsharks is setting up to play</label>

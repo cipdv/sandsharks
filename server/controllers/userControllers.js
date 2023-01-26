@@ -1,13 +1,19 @@
 import asyncHandler from 'express-async-handler'
+import sgMail from '@sendgrid/mail'
 import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
 import {registrationValidation} from '../utils/validate.js'
+import dotenv from 'dotenv'
+
+//configs
+dotenv.config()
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 //desc: register a new user and get jwt
 //route: POST /api/users/register
 //access: public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications, waiverAndCodeSignature } = req.body
+    const { firstName, lastName, preferredName, pronouns, email, vballExperience, password, wantsEmailNotifications } = req.body
     let { image } = req.body
 
     try {
@@ -37,8 +43,30 @@ const registerUser = asyncHandler(async (req, res) => {
             vballExperience,
             password,
             wantsEmailNotifications,
-            waiverAndCodeSignature
+            waiverAndCoC: false
         })
+
+        const msg = {
+            to: 'cipdevries@ciprmt.com', // Change to your recipient
+            from: 'cipdevries@ciprmt.com', // Change to your verified sender
+            subject: `New Shark: ${firstName} "${preferredName}" ${lastName}`,
+            text: `${firstName} ${lastName} has registered as a new user.`,
+            html: `
+              <p>${firstName} "${preferredName}" ${lastName} has registered as a new user.</p>
+              <p>Pronouns: ${pronouns}</p>
+              <p>Email: ${email}</p>
+              <p>${vballExperience}</p>
+            `,
+          }
+    
+        sgMail
+        .send(msg)
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+        }) 
 
         //return user 
         res.status(201).json({
@@ -53,6 +81,7 @@ const registerUser = asyncHandler(async (req, res) => {
             adminStatus: user.adminStatus,
             wantsEmailNotifications: user.wantsEmailNotifications,
             gotItVballExperience: user.gotItVballExperience,
+            waiverAndCoC: user.waiverAndCoC,
             token: generateToken(user._id)
         })
     } catch (error) {
@@ -83,6 +112,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 vballExperience: user.vballExperience,
                 email: user.email,
                 adminStatus: user.adminStatus,
+                waiverAndCoC: user.waiverAndCoC,
                 wantsEmailNotifications: user.wantsEmailNotifications,
                 gotItVballExperience: user.gotItVballExperience,
                 token: generateToken(user._id),
@@ -119,6 +149,7 @@ const updateProfile = asyncHandler(async (req, res) => {
                 vballExperience: user.vballExperience,
                 email: user.email,
                 adminStatus: user.adminStatus,
+                waiverAndCoC: user.waiverAndCoC,
                 wantsEmailNotifications: user.wantsEmailNotifications,
                 gotItVballExperience: user.gotItVballExperience,
                 token: generateToken(user._id)

@@ -27,8 +27,8 @@ const SearchBar = () => {
     }
 
   return (
-    <div className='search-bar'>
-        <div>
+    <div className='post'>
+        <div className='search-bar'>
             <div>
                 <label>Volleyball Experience</label>
                 <select value={volleyballExperience} onChange={e=>setVolleyballExperience(e.target.value)}>
@@ -48,12 +48,13 @@ const SearchBar = () => {
                     <option value='super'>super</option>
                 </select>
             </div>
-        </div>
-        <form onSubmit={submitSearch}>
+            <form onSubmit={submitSearch}>
             <input type='text' placeholder='Search users by name' value={searchName} onChange={e=>setSearchName(e.target.value)} />
             <button className='btn' type='submit'>Search</button>
         </form>
         {errors.message && <p className='error-msg'>{errors.message}</p>}
+        </div>
+        
     </div>
   )
 }

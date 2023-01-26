@@ -39,9 +39,8 @@ const userSchema = mongoose.Schema({
         required: true,
         default: false
     },
-    waiverAndCodeSignature: {
-        type: String,
-        required: true
+    waiverAndCoC: {
+        type: Boolean
     },
     gotItVballExperience: {
         type: Boolean,

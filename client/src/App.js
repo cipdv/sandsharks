@@ -11,6 +11,8 @@ import Header from './components/Header';
 import UpdateProfileScreen from './screens/UpdateProfileScreen';
 import DeleteProfileScreen from './screens/DeleteProfileScreen';
 import ViewProfilesScreen from './screens/ViewProfilesScreen';
+import Footer from './components/Footer';
+import WaiverCoC from './screens/WaiverCoC';
 
 function App() {
 
@@ -27,7 +29,9 @@ function App() {
         <Route path='/updateprofile' element={user ? <UpdateProfileScreen /> : <LoginScreen />} />
         <Route path='/deleteprofile' element={user ? <DeleteProfileScreen user={user} /> : <LoginScreen />} />
         <Route path='/viewprofiles' element={user ? <ViewProfilesScreen /> : <LoginScreen />} />
+        <Route path='/waiverandcodeofconduct' element={user ? <WaiverCoC /> : <LoginScreen />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
